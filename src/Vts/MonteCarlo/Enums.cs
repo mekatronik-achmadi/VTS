@@ -355,6 +355,10 @@ namespace Vts.MonteCarlo
         /// Tissue slab with multiple embedded ellipsoids
         /// </summary>
         MultiEllipsoid,
+        /// <summary>
+        /// Tissue cude with multiple tetrahedra
+        /// </summary>
+        MultiTetrahedronInCube,
     }
 
     ///// <summary>

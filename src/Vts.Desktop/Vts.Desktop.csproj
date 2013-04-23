@@ -736,6 +736,9 @@
     <Compile Include="..\Vts\MonteCarlo\DataStructures\TissueInputs\MultiLayerTissueInput.cs">
       <Link>MonteCarlo\DataStructures\TissueInputs\MultiLayerTissueInput.cs</Link>
     </Compile>
+    <Compile Include="..\Vts\MonteCarlo\DataStructures\TissueInputs\MultiTetrahedronInCubeTissueInput.cs">
+      <Link>MonteCarlo\DataStructures\TissueInputs\MultiTetrahedronInCubeTissueInput.cs</Link>
+    </Compile>
     <Compile Include="..\Vts\MonteCarlo\DataStructures\TissueInputs\SingleEllipsoidTissueInput.cs">
       <Link>MonteCarlo\DataStructures\TissueInputs\SingleEllipsoidTissueInput.cs</Link>
     </Compile>
@@ -1117,8 +1120,14 @@
     <Compile Include="..\Vts\MonteCarlo\Tissues\MultiLayerTissue.cs">
       <Link>MonteCarlo\Tissues\MultiLayerTissue.cs</Link>
     </Compile>
+    <Compile Include="..\Vts\MonteCarlo\Tissues\MultiTetrahedronInCubeTissue.cs">
+      <Link>MonteCarlo\Tissues\MultiTetrahedronInCubeTissue.cs</Link>
+    </Compile>
     <Compile Include="..\Vts\MonteCarlo\Tissues\SingleInclusionTissue.cs">
       <Link>MonteCarlo\Tissues\SingleInclusionTissue.cs</Link>
+    </Compile>
+    <Compile Include="..\Vts\MonteCarlo\Tissues\TetrahedronRegion.cs">
+      <Link>MonteCarlo\Tissues\TetrahedronRegion.cs</Link>
     </Compile>
     <Compile Include="..\Vts\MonteCarlo\Tissues\TissueBase.cs">
       <Link>MonteCarlo\Tissues\TissueBase.cs</Link>
