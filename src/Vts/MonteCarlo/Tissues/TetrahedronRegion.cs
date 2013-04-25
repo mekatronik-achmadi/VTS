@@ -13,23 +13,28 @@ namespace Vts.MonteCarlo.Tissues
         /// <summary>
         /// class specifies tetrahedron tissue region.
         /// </summary>
-        /// <param name="nodes">list of nodes</param>
+        /// <param name="nodes">array of nodes</param>
         /// <param name="op">OpticalProperties of tetrahedron</param>
-        public TetrahedronRegion(IList<Position> nodes, OpticalProperties op)
+        public TetrahedronRegion(Position[] nodes, OpticalProperties op)
         {
+            Nodes = nodes;
             RegionOP = op;
         }
         /// <summary>
         /// default constructor defines tetrahedron at origin 
         /// </summary>
         public TetrahedronRegion() : this (
-            new List<Position>() { 
+            new Position[] { 
                 new Position(0, 0, 0),
                 new Position(0, 0, 1),
                 new Position(0, 1, 0),
                 new Position(1, 0, 0) },
             new OpticalProperties(0.05, 1.0, 0.8, 1.4)) {}
 
+        /// <summary>
+        /// nodes of tetrahedron
+        /// </summary>
+        public Position[] Nodes { get; set; }
         /// <summary>
         /// optical properties of tetrahedron
         /// </summary>

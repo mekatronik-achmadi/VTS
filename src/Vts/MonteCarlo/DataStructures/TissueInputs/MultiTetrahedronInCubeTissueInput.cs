@@ -15,14 +15,18 @@ namespace Vts.MonteCarlo
     public class MultiTetrahedronInCubeTissueInput : ITissueInput
     {
         private ITissueRegion[] _regions;
+        private string _meshDataFilename;
 
         /// <summary>
         /// constructor for Multi-tetrahedron in cube tissue input
         /// </summary>
         /// <param name="regions">list of tissue regions comprising tissue</param>
-        public MultiTetrahedronInCubeTissueInput(ITissueRegion[] regions)
+        // Question: ITissue expects an array of ITissueRegion.  Can I use filename 
+        // to instantiate Regions?
+        public MultiTetrahedronInCubeTissueInput(ITissueRegion[] regions, string meshDataFilename)
         {
             _regions = regions;
+            _meshDataFilename = meshDataFilename;
         }
 
         /// <summary>
@@ -33,16 +37,9 @@ namespace Vts.MonteCarlo
                 new ITissueRegion[]
                 { 
                     // need to determine how to bring in list of tetrahedra
-                    new TetrahedronRegion(
-                        new List<Position>()
-                            {
-                                new Position(0, 0, 0),
-                                new Position(0, 0, 1),
-                                new Position(0, 1, 0),
-                                new Position(1, 0, 0),                                
-                            }, 
-                        new OpticalProperties( 0.01, 1, 0.8, 1.4))
-                })
+                    new TetrahedronRegion()
+                },
+        "cube.mesh")
         {
         }
         /// <summary>
@@ -54,5 +51,9 @@ namespace Vts.MonteCarlo
         /// list of tissue regions comprising tissue
         /// </summary>
         public ITissueRegion[] Regions { get { return _regions; } set { _regions = value; } }
+        /// <summary>
+        /// filename of input mesh data
+        /// </summary>
+        public string MeshDataFilename { get { return _meshDataFilename; } set { _meshDataFilename = value; } }
     }
 }

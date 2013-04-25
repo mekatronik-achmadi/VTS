@@ -7,11 +7,11 @@ namespace Vts.MonteCarlo.Tissues
 {
     /// <summary>
     /// Implements ITissue.  Defines tissue geometries comprised of tetrahedra
-    /// within cube volume with air layers around?  
+    /// within cube volume with air around?  
     /// </summary>
     public class MultiTetrahedronInCubeTissue : TissueBase
     {
-        private IList<TetrahedronRegion> _tetrahedronRegions;
+        private static TetrahedronMeshData _meshData;
 
         /// <summary>
         /// Creates an instance of a MultiTetrahedronInCubeTissue
@@ -22,14 +22,16 @@ namespace Vts.MonteCarlo.Tissues
         /// <param name="russianRouletteWeightThreshold">photon weight threshold to turn on Russian Roulette</param>
         public MultiTetrahedronInCubeTissue(
             IList<ITissueRegion> regions, 
+            string meshDataFilename,
             AbsorptionWeightingType absorptionWeightingType, 
             PhaseFunctionType phaseFunctionType,
             double russianRouletteWeightThreshold)
             : base(regions, absorptionWeightingType, phaseFunctionType,russianRouletteWeightThreshold)
         {
-            _tetrahedronRegions = regions.Select(region => (TetrahedronRegion) region).ToArray();
+            _meshData = TetrahedronMeshData.FromFile(meshDataFilename);
         }
 
+        // Question: how to instantiate based on Input class if Regions not specified
         /// <summary>
         /// Creates an instance of a MultiTetrahedronInCubeTissue based on an input data class 
         /// </summary>
@@ -43,18 +45,10 @@ namespace Vts.MonteCarlo.Tissues
             AbsorptionWeightingType absorptionWeightingType, 
             PhaseFunctionType phaseFunctionType,
             double russianRouletteWeightThreshold)
-            : this(input.Regions, absorptionWeightingType, phaseFunctionType, russianRouletteWeightThreshold)
+            : this(input.Regions, input.MeshDataFilename, absorptionWeightingType, phaseFunctionType, russianRouletteWeightThreshold)
         {
         }
-
-        /// <summary>
-        /// Creates a default instance of a MultiTetrahedronInCubeTissue based on a homogeneous medium slab geometry
-        /// and discrete absorption weighting
-        /// </summary>
-        public MultiTetrahedronInCubeTissue() 
-            : this(new MultiTetrahedronInCubeTissueInput().Regions, AbsorptionWeightingType.Discrete, PhaseFunctionType.HenyeyGreenstein, 0.0)
-        {
-        }
+        
         /// <summary>
         /// method to determine region index of region photon is currently in
         /// </summary>
@@ -66,9 +60,9 @@ namespace Vts.MonteCarlo.Tissues
             // which region photon resides
 
             int index = -1;
-            for (int i = 0; i < _tetrahedronRegions.Count(); i++)
+            for (int i = 0; i < _meshData.TetrahedronRegions.Count(); i++)
             {
-                if (_tetrahedronRegions[i].ContainsPosition(position))
+                if (_meshData.TetrahedronRegions[i].ContainsPosition(position))
                 {
                     index = i;
                 }
@@ -93,10 +87,10 @@ namespace Vts.MonteCarlo.Tissues
             // get current and adjacent regions
             int currentRegionIndex = photon.CurrentRegionIndex; 
             // check if in embedded tissue region ckh fix 8/10/11
-            TetrahedronRegion currentRegion = _tetrahedronRegions[1];
-            if (currentRegionIndex < _tetrahedronRegions.Count)
+            TetrahedronRegion currentRegion = _meshData.TetrahedronRegions[1];
+            if (currentRegionIndex < _meshData.TetrahedronRegions.Length)
             {
-                currentRegion = _tetrahedronRegions[currentRegionIndex];
+                currentRegion = _meshData.TetrahedronRegions[currentRegionIndex];
             }
 
             // calculate distance to boundary based on z-projection of photon trajectory

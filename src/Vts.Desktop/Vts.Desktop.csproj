@@ -1126,6 +1126,9 @@
     <Compile Include="..\Vts\MonteCarlo\Tissues\SingleInclusionTissue.cs">
       <Link>MonteCarlo\Tissues\SingleInclusionTissue.cs</Link>
     </Compile>
+    <Compile Include="..\Vts\MonteCarlo\Tissues\TetrahedronMeshData.cs">
+      <Link>MonteCarlo\Tissues\TetrahedronMeshData.cs</Link>
+    </Compile>
     <Compile Include="..\Vts\MonteCarlo\Tissues\TetrahedronRegion.cs">
       <Link>MonteCarlo\Tissues\TetrahedronRegion.cs</Link>
     </Compile>
