@@ -97,6 +97,9 @@ namespace Vts.MonteCarlo.Factories
                 case TallyType.FluenceOfXAndYAndZ:
                     var fxyzinput = (FluenceOfXAndYAndZDetectorInput)detectorInput;
                     return new FluenceOfXAndYAndZDetector(fxyzinput.X, fxyzinput.Y, fxyzinput.Z, tissue, tallySecondMoment, fxyzinput.Name);
+                case TallyType.FluenceOfTetrahedralMesh:
+                    var ftminput = (FluenceOfTetrahedralMeshDetectorInput)detectorInput;
+                    return new FluenceOfTetrahedralMeshDetector(tissue, tallySecondMoment, ftminput.Name);
                 case TallyType.AOfRhoAndZ:
                     var arzinput = (AOfRhoAndZDetectorInput)detectorInput;
                     return new AOfRhoAndZDetector(arzinput.Rho, arzinput.Z, tissue, tallySecondMoment, arzinput.Name);

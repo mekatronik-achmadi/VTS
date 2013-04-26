@@ -7,12 +7,12 @@ namespace Vts.MonteCarlo.Tissues
     /// <summary>
     /// Describes class for storing tetrahedron mesh info.
     /// </summary>
-    public class TetrahedronMeshData 
+    public class TetrahedralMeshData 
     {
         /// <summary>
         /// Creates an instance of a TetrahedronMeshData
         /// </summary>
-        public TetrahedronMeshData()
+        public TetrahedralMeshData()
         {
             Nodes = null;
             TetrahedronRegions = null;
@@ -39,9 +39,9 @@ namespace Vts.MonteCarlo.Tissues
         /// </summary>
         /// <param name="fileName">The base filename for the tetrahedral mesh (no ".xml")</param>
         /// <returns>A new instance of TetrahedronMeshData</returns>
-        public static TetrahedronMeshData FromFile(string fileName)
+        public static TetrahedralMeshData FromFile(string fileName)
         {
-            var data = new TetrahedronMeshData();
+            var data = new TetrahedralMeshData();
             try
             {
                 var srNodes = new StreamReader(fileName + ".node");

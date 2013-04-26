@@ -127,6 +127,7 @@ namespace Vts.MonteCarlo.Extensions
                 case TallyType.FluenceOfRhoAndZ:
                 case TallyType.FluenceOfRhoAndZAndTime:
                 case TallyType.FluenceOfXAndYAndZ:
+                case TallyType.FluenceOfTetrahedralMesh:
                 case TallyType.AOfRhoAndZ:
                 case TallyType.ATotal:
                 case TallyType.RadianceOfRhoAndZAndAngle:
@@ -182,6 +183,7 @@ namespace Vts.MonteCarlo.Extensions
                 case TallyType.FluenceOfRhoAndZ:
                 case TallyType.FluenceOfRhoAndZAndTime:
                 case TallyType.FluenceOfXAndYAndZ:
+                case TallyType.FluenceOfTetrahedralMesh:
                 case TallyType.AOfRhoAndZ:
                 case TallyType.ReflectedMTOfRhoAndSubregionHist:
                 case TallyType.RadianceOfRhoAndZAndAngle:

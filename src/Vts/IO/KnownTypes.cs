@@ -24,6 +24,7 @@ namespace Vts.IO
 					typeof (FluenceOfRhoAndZDetector),
 					typeof (FluenceOfRhoAndZAndTimeDetector),
                     typeof (FluenceOfXAndYAndZDetector),
+                    typeof (FluenceOfTetrahedralMeshDetector),
                     typeof (dMCdROfRhodMuaDetector),
                     typeof (dMCdROfRhodMusDetector),
 					typeof (pMCROfRhoDetector),

@@ -68,6 +68,7 @@ namespace Vts.MonteCarlo
     [KnownType(typeof(FluenceOfRhoAndZAndTimeDetectorInput))]
     [KnownType(typeof(FluenceOfRhoAndZDetectorInput))]
     [KnownType(typeof(FluenceOfXAndYAndZDetectorInput))]
+    [KnownType(typeof(FluenceOfTetrahedralMeshDetectorInput))]
     [KnownType(typeof(RadianceOfRhoAndZAndAngleDetectorInput))]
     [KnownType(typeof(RadianceOfXAndYAndZAndThetaAndPhiDetectorInput))]
     [KnownType(typeof(pMCROfRhoAndTimeDetectorInput))]

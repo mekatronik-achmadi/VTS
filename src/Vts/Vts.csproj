@@ -234,6 +234,7 @@
     <Compile Include="MonteCarlo\DataStructuresValidation\DetectorInputs\dMCdROfRhodMuaDetectorInputValidation.cs" />
     <Compile Include="MonteCarlo\DataStructuresValidation\PostProcessorInputs\PostProcessorInputValidation.cs" />
     <Compile Include="MonteCarlo\DataStructuresValidation\TissueInputs\SingleEllipsoidTissueInputValidation.cs" />
+    <Compile Include="MonteCarlo\DataStructures\DetectorInputs\FluenceOfTetrahedralMeshDetectorInput.cs" />
     <Compile Include="MonteCarlo\DataStructures\DetectorInputs\dMCdROfRhodMusDetectorInput.cs" />
     <Compile Include="MonteCarlo\DataStructures\DetectorInputs\dMCdROfRhodMuaDetectorInput.cs" />
     <Compile Include="MonteCarlo\DataStructures\DetectorInputs\ReflectedTimeOfRhoAndSubregionHistDetectorInput.cs" />
@@ -258,6 +259,7 @@
     <Compile Include="MonteCarlo\DataStructures\TissueInputs\MultiTetrahedronInCubeTissueInput.cs" />
     <Compile Include="MonteCarlo\DataStructures\TissueInputs\MultiEllipsoidTissueInput.cs" />
     <Compile Include="MonteCarlo\DataStructures\TissueInputs\MultiLayerTissueInput.cs" />
+    <Compile Include="MonteCarlo\Detectors\FluenceOfTetrahedralMeshDetector.cs" />
     <Compile Include="MonteCarlo\Detectors\ReflectedTimeOfRhoAndSubregionHistDetector.cs" />
     <Compile Include="MonteCarlo\Detectors\RadianceOfXAndYAndZAndThetaAndPhiDetector.cs" />
     <Compile Include="MonteCarlo\Detectors\pMCROfFxAndTimeDetector.cs" />
@@ -490,7 +492,7 @@
     <Compile Include="MonteCarlo\Detectors\TOfRhoAndAngleDetector.cs" />
     <Compile Include="MonteCarlo\Detectors\TOfRhoDetector.cs" />
     <Compile Include="MonteCarlo\Sources\SurfaceEmittingBulkSources\Spherical\CustomSurfaceEmittingSphericalSource.cs" />
-    <Compile Include="MonteCarlo\Tissues\TetrahedronMeshData.cs" />
+    <Compile Include="MonteCarlo\Tissues\TetrahedralMeshData.cs" />
     <Compile Include="MonteCarlo\Tissues\MultiTetrahedronInCubeTissue.cs" />
     <Compile Include="MonteCarlo\Tissues\TetrahedronRegion.cs" />
     <Compile Include="MonteCarlo\Tissues\CylinderRegion.cs" />

@@ -169,6 +169,10 @@ namespace Vts.MonteCarlo.IO
 	                    FileIO.WriteToXML((TOfAngleDetector)detector, filePath + ".xml");
 						break;
 
+                    case TallyType.FluenceOfTetrahedralMesh:
+                        FileIO.WriteToXML((FluenceOfTetrahedralMeshDetector)detector, filePath + ".xml");
+                        break;
+
                     // "2D" detectors
                     case TallyType.ROfRhoAndTime:
 	                    FileIO.WriteToXML((ROfRhoAndTimeDetector)detector, filePath + ".xml");
@@ -333,6 +337,12 @@ namespace Vts.MonteCarlo.IO
                         var tOfAngleDetectorDims = new int[] { tOfAngleDetector.Angle.Count - 1 };
                         tOfAngleDetector.Mean = (double[])FileIO.ReadArrayFromBinary<double>(filePath, tOfAngleDetectorDims);
                         return tOfAngleDetector;
+
+                    case TallyType.FluenceOfTetrahedralMesh:
+                        var fluenceOfTetrahedralMeshDetector = FileIO.ReadFromXML<FluenceOfTetrahedralMeshDetector>(filePath + ".xml");
+                        var fluenceOfTetrahedralMeshDetectorDims = new int[] { fluenceOfTetrahedralMeshDetector.Mean.Length - 1 };
+                        fluenceOfTetrahedralMeshDetector.Mean = (double[])FileIO.ReadArrayFromBinary<double>(filePath, fluenceOfTetrahedralMeshDetectorDims);
+                        return fluenceOfTetrahedralMeshDetector;
 
                     // "2D" detectors
                     case TallyType.ROfRhoAndTime:
@@ -549,6 +559,11 @@ namespace Vts.MonteCarlo.IO
                         tOfAngleDetector.Mean = (double[])FileIO.ReadArrayFromBinaryInResources<double>(filePath, projectName, tOfAngleDetectorDims);
                         return tOfAngleDetector;
 
+                    case TallyType.FluenceOfTetrahedralMesh:
+                        var fluenceOfTetrahedralMeshDetector = FileIO.ReadFromXMLInResources<FluenceOfTetrahedralMeshDetector>(filePath + ".xml", projectName);
+                        var fluenceOfTetrahedralMeshDetectorDims = new int[] { fluenceOfTetrahedralMeshDetector.Mean.Length - 1 };
+                        fluenceOfTetrahedralMeshDetector.Mean = (double[])FileIO.ReadArrayFromBinaryInResources<double>(filePath, projectName, fluenceOfTetrahedralMeshDetectorDims);
+                        return fluenceOfTetrahedralMeshDetector;
                     // "2D" detectors
                     case TallyType.ROfRhoAndTime:
                         var rOfRhoAndTimeDetector = FileIO.ReadFromXMLInResources<ROfRhoAndTimeDetector>(filePath + ".xml", projectName);

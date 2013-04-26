@@ -11,8 +11,6 @@ namespace Vts.MonteCarlo.Tissues
     /// </summary>
     public class MultiTetrahedronInCubeTissue : TissueBase
     {
-        private static TetrahedronMeshData _meshData;
-
         /// <summary>
         /// Creates an instance of a MultiTetrahedronInCubeTissue
         /// </summary>
@@ -28,7 +26,7 @@ namespace Vts.MonteCarlo.Tissues
             double russianRouletteWeightThreshold)
             : base(regions, absorptionWeightingType, phaseFunctionType,russianRouletteWeightThreshold)
         {
-            _meshData = TetrahedronMeshData.FromFile(meshDataFilename);
+            MeshData = TetrahedralMeshData.FromFile(meshDataFilename);
         }
 
         // Question: how to instantiate based on Input class if Regions not specified
@@ -48,7 +46,16 @@ namespace Vts.MonteCarlo.Tissues
             : this(input.Regions, input.MeshDataFilename, absorptionWeightingType, phaseFunctionType, russianRouletteWeightThreshold)
         {
         }
-        
+        /// <summary>
+        /// Creates a default instance of a MultiTetrahedronInCubeTissue based on a homogeneous medium slab geometry
+        /// and discrete absorption weighting
+        /// </summary>
+        public MultiTetrahedronInCubeTissue() 
+            : this(new MultiTetrahedronInCubeTissueInput(), AbsorptionWeightingType.Discrete, PhaseFunctionType.HenyeyGreenstein, 0.0)
+        {
+        }
+
+        public TetrahedralMeshData MeshData { get; private set; }
         /// <summary>
         /// method to determine region index of region photon is currently in
         /// </summary>
@@ -60,9 +67,9 @@ namespace Vts.MonteCarlo.Tissues
             // which region photon resides
 
             int index = -1;
-            for (int i = 0; i < _meshData.TetrahedronRegions.Count(); i++)
+            for (int i = 0; i < MeshData.TetrahedronRegions.Count(); i++)
             {
-                if (_meshData.TetrahedronRegions[i].ContainsPosition(position))
+                if (MeshData.TetrahedronRegions[i].ContainsPosition(position))
                 {
                     index = i;
                 }
@@ -87,10 +94,10 @@ namespace Vts.MonteCarlo.Tissues
             // get current and adjacent regions
             int currentRegionIndex = photon.CurrentRegionIndex; 
             // check if in embedded tissue region ckh fix 8/10/11
-            TetrahedronRegion currentRegion = _meshData.TetrahedronRegions[1];
-            if (currentRegionIndex < _meshData.TetrahedronRegions.Length)
+            TetrahedronRegion currentRegion = MeshData.TetrahedronRegions[1];
+            if (currentRegionIndex < MeshData.TetrahedronRegions.Length)
             {
-                currentRegion = _meshData.TetrahedronRegions[currentRegionIndex];
+                currentRegion = MeshData.TetrahedronRegions[currentRegionIndex];
             }
 
             // calculate distance to boundary based on z-projection of photon trajectory
