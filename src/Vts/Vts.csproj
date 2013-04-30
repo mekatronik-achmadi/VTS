@@ -492,6 +492,7 @@
     <Compile Include="MonteCarlo\Detectors\TOfRhoAndAngleDetector.cs" />
     <Compile Include="MonteCarlo\Detectors\TOfRhoDetector.cs" />
     <Compile Include="MonteCarlo\Sources\SurfaceEmittingBulkSources\Spherical\CustomSurfaceEmittingSphericalSource.cs" />
+    <Compile Include="MonteCarlo\Tissues\TriangleRegion.cs" />
     <Compile Include="MonteCarlo\Tissues\TetrahedralMeshData.cs" />
     <Compile Include="MonteCarlo\Tissues\MultiTetrahedronInCubeTissue.cs" />
     <Compile Include="MonteCarlo\Tissues\TetrahedronRegion.cs" />

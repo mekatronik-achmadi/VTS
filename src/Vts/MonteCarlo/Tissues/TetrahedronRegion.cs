@@ -9,7 +9,9 @@ namespace Vts.MonteCarlo.Tissues
     /// </summary>
     public class TetrahedronRegion : ITissueRegion
     {
+        private int _numTriangles = 4;  // number of triangles defined by tetrahedron
         private bool _onBoundary = false;
+ 
         /// <summary>
         /// class specifies tetrahedron tissue region.
         /// </summary>
@@ -19,6 +21,15 @@ namespace Vts.MonteCarlo.Tissues
         {
             Nodes = nodes;
             RegionOP = op;
+            Center = new Position(
+                (nodes[0].X + nodes[1].X + nodes[2].X + nodes[3].X) / 4,
+                (nodes[0].Y + nodes[1].Y + nodes[2].Y + nodes[3].Y) / 4,
+                (nodes[0].Z + nodes[1].Z + nodes[2].Z + nodes[3].Z) / 4);
+            // tech question: does this order matter?
+            Triangles[0] = new TriangleRegion(new Position[] { nodes[0], nodes[1], nodes[2] });
+            Triangles[1] = new TriangleRegion(new Position[] { nodes[0], nodes[1], nodes[3] });
+            Triangles[2] = new TriangleRegion(new Position[] { nodes[0], nodes[2], nodes[3] });
+            Triangles[3] = new TriangleRegion(new Position[] { nodes[1], nodes[2], nodes[1] });
         }
         /// <summary>
         /// default constructor defines tetrahedron at origin 
@@ -34,15 +45,25 @@ namespace Vts.MonteCarlo.Tissues
         /// <summary>
         /// nodes of tetrahedron
         /// </summary>
-        public Position[] Nodes { get; set; }
+        public Position[] Nodes { get; private set; }
         /// <summary>
         /// optical properties of tetrahedron
         /// </summary>
-        public OpticalProperties RegionOP { get; set; }
+        public OpticalProperties RegionOP { get; private set; }
         /// <summary>
-        /// center of tetrahedron (not sure this makes sense for this shape)
+        /// center of tetrahedron
         /// </summary>
-        public Position Center { get; set; }
+        public Position Center { get; private set; }
+        /// <summary>
+        /// volume of tetrahedron
+        /// </summary>
+        public double Volume { get; private set; }
+        /// <summary>
+        /// array of node indices that describe the 4 triangles
+        /// </summary>
+        public TriangleRegion[] Triangles { get; private set; }
+
+
         /// <summary>
         /// method to determine if given Position lies within tetrahedron
         /// </summary>
@@ -50,25 +71,7 @@ namespace Vts.MonteCarlo.Tissues
         /// <returns>boolean, true if within, false otherwise</returns>
         public bool ContainsPosition(Position position)
         {
-            // use http://steve.hollasch.net/cgindex/geometry/ptintet.html?
-            double inside = 1;
-
-                //if (inside < 0.9999999)
-                if (inside < 0.9999999999)
-                {
-                    return true;
-                }
-                //else if (inside > 1.0000001)
-                else if (inside > 1.00000000001)
-                {
-                    return false;
-                }
-                else  // on boundary
-                {
-                    _onBoundary = true;
-                    //return false; // ckh try 8/21/11
-                    return true;
-                }
+            return true;
         }
         /// <summary>
         /// method to determine if given Position lies on boundary of tetrahedron
@@ -88,9 +91,32 @@ namespace Vts.MonteCarlo.Tissues
         public bool RayIntersectBoundary(Photon photon, out double distanceToBoundary)
         {
             distanceToBoundary = double.PositiveInfinity;
-            double root1, root2, xto, yto, zto;
-            double root = 0;
-            return true;
+            bool hit = false;
+            // determine normal distance from photon to each triangular face of the tetrahedron
+            double[] temp = new double[4];
+            temp[0] = Direction.GetDotProduct(Triangles[0].Normal, photon.DP.Direction);
+            temp[1] = Direction.GetDotProduct(Triangles[1].Normal, photon.DP.Direction);
+            temp[2] = Direction.GetDotProduct(Triangles[2].Normal, photon.DP.Direction);
+            temp[3] = Direction.GetDotProduct(Triangles[3].Normal, photon.DP.Direction);
+            for (int i = 0; i < _numTriangles; i++)
+            {
+                if (temp[i] < 0)
+                {
+                    var dum = Triangles[i].Normal.Ux * photon.DP.Position.X + 
+                              Triangles[i].Normal.Uy * photon.DP.Position.Y +
+                              Triangles[i].Normal.Uz * photon.DP.Position.Z + Triangles[i].D;
+                    var distance = -dum/temp[i];
+                    if (distance < distanceToBoundary)
+                    {
+                        distanceToBoundary = distance;
+                    }
+                }
+            }
+            if (distanceToBoundary < double.PositiveInfinity)
+            {
+                hit = true;
+            }
+            return hit;
         }        
     }
 }
