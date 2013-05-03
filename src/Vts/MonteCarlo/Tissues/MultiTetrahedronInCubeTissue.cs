@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Vts.Common;
+using Vts.MonteCarlo.PhotonData;
 
 namespace Vts.MonteCarlo.Tissues
 {
@@ -11,6 +12,10 @@ namespace Vts.MonteCarlo.Tissues
     /// </summary>
     public class MultiTetrahedronInCubeTissue : TissueBase
     {
+        private int _currentTetrahedronIndex;
+        private TetrahedronRegion _currentTetrahedronRegion;
+        private IList<TriangleRegion> _boundaryTriangles; 
+
         /// <summary>
         /// Creates an instance of a MultiTetrahedronInCubeTissue
         /// </summary>
@@ -63,56 +68,46 @@ namespace Vts.MonteCarlo.Tissues
         /// <returns></returns>
         public override int GetRegionIndex(Position position)
         {
-            // use ITissueRegion interface method ContainsPosition for TetrahedronRegion to determine
-            // which region photon resides
-
-            int index = -1;
-            for (int i = 0; i < MeshData.TetrahedronRegions.Count(); i++)
-            {
-                if (MeshData.TetrahedronRegions[i].ContainsPosition(position))
-                {
-                    index = i;
-                }
-            }
-            return index;
+            return _currentTetrahedronIndex;
         }
         
         /// <summary>
-        /// Finds the distance to the next boundary and independent of hitting it
+        /// Finds the distance to the next boundary independent of hitting it
         /// </summary>
-        /// <param name="photon"></param>
+        /// <param name="photon">current photon state</param>
         public override double GetDistanceToBoundary(Photon photon)
         {
-            if (photon.DP.Direction.Uz == 0.0)
+            // first, check what region the photon is in
+            int regionIndex = photon.CurrentRegionIndex;
+            _currentTetrahedronIndex = regionIndex;
+
+            // check if current track will hit the tetrahedron boundary, returning the correct distance
+            double distanceToBoundary = double.PositiveInfinity;
+            if (_currentTetrahedronRegion.RayIntersectBoundary(photon, out distanceToBoundary))
             {
-                return double.PositiveInfinity;
+                return distanceToBoundary;
             }
-
-            // going "up" in negative z-direction
-            bool goingUp = photon.DP.Direction.Uz < 0.0;
-
-            // get current and adjacent regions
-            int currentRegionIndex = photon.CurrentRegionIndex; 
-            // check if in embedded tissue region ckh fix 8/10/11
-            TetrahedronRegion currentRegion = MeshData.TetrahedronRegions[1];
-            if (currentRegionIndex < MeshData.TetrahedronRegions.Length)
+            else // otherwise, check that a projected track will hit the inclusion boundary
             {
-                currentRegion = MeshData.TetrahedronRegions[currentRegionIndex];
+                var projectedPhoton = new Photon();
+                projectedPhoton.DP = new PhotonDataPoint(photon.DP.Position, photon.DP.Direction, photon.DP.Weight,
+                    photon.DP.TotalTime, photon.DP.StateFlag);
+                projectedPhoton.S = 100;
+                if (_currentTetrahedronRegion.RayIntersectBoundary(projectedPhoton, out distanceToBoundary))
+                {
+                    return distanceToBoundary;
+                }
             }
-
-            // calculate distance to boundary based on z-projection of photon trajectory
-            double distanceToBoundary = 1;
-
             return distanceToBoundary;
         }
         /// <summary>
-        /// method to determine if on boundary of tissue, i.e. at tissue/air interface
+        /// method to determine if on boundary of cube
         /// </summary>
         /// <param name="position">photon position</param>
         /// <returns></returns>
         public override bool OnDomainBoundary(Position position)
         {
-            // this code assumes that around cube is air
+            // check 
             return true;
         }
         /// <summary>

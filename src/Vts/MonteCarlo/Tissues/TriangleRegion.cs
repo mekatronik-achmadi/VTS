@@ -5,7 +5,7 @@ using Vts.Common;
 namespace Vts.MonteCarlo.Tissues
 {
     /// <summary>
-    /// Defines Triangle given 3 nodes.  Facilities TetrahedralRegion class.
+    /// Defines Triangle given 3 nodes.  Facilitates TetrahedralRegion class.
     /// In future can possibly merge with FemModeling/MGRTE/2D/DataStructures/MeshInputs/SpatialMesh 
     /// </summary>
     public class TriangleRegion 
