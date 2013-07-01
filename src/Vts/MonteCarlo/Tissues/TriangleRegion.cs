@@ -36,13 +36,9 @@ namespace Vts.MonteCarlo.Tissues
         /// </summary>
         public Position[] Nodes { get; private set; }
         /// <summary>
-        /// boolean indicating whether triangle is on the boundary
+        /// int indicating boundary index of triangle 
         /// </summary>
-        public bool BoundaryTriangle { get; set; }
-        /// <summary>
-        /// indices of the tetrahedra that this triangle supports
-        /// </summary>
-        public int[] TetrahedronIndices { get; set; }
+        public int BoundaryIndex { get; set; }
         /// <summary>
         /// normal vector to this triangle
         /// </summary>
@@ -56,6 +52,22 @@ namespace Vts.MonteCarlo.Tissues
         /// (n0,n1,n2) is normal vector
         /// </summary>
         public double D { get; set; }
+        /// <summary>
+        /// indices of nodes that comprise triangle
+        /// </summary>
+        public int[] NodeIndices { get; set; }
+        /// <summary>
+        /// index of triangle
+        /// </summary>
+        public int TriangleIndex { get; set; }
+        /// <summary>
+        /// indices of the tetrahedra that this triangle supports
+        /// </summary>
+        public int[] TetrahedronIndices { get; set; }
+        /// <summary>
+        /// number of tetrahedrons that contain this triangle
+        /// </summary>
+        public int NumberOfContainingTetrahedrons { get; set; }
 
         /// <summary>
         /// method that initializes information about triangle. Algorithm taken from
@@ -88,6 +100,20 @@ namespace Vts.MonteCarlo.Tissues
             Normal = new Direction(nx / norm, ny / norm, nz / norm); // unit normal
             Area = norm / 2.0;
             D = -(x0*Normal.Ux + y0*Normal.Uy + z0*Normal.Uz);
+        }
+        public static int CompareTrianglesByNodeIndices(TriangleRegion a, TriangleRegion b)
+        {
+            if ((a.NodeIndices[0] < b.NodeIndices[0]) ||
+                   (a.NodeIndices[0] == b.NodeIndices[0] && a.NodeIndices[1] < b.NodeIndices[1]) ||
+                   (a.NodeIndices[0] == b.NodeIndices[0] && a.NodeIndices[1] == b.NodeIndices[1] &&
+                   a.NodeIndices[2] < b.NodeIndices[2]))
+            {
+                return 1;
+            }
+            else
+            {
+                return -1;
+            }
         }
     }
 }

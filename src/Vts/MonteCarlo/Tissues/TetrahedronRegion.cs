@@ -16,11 +16,11 @@ namespace Vts.MonteCarlo.Tissues
         /// class specifies tetrahedron tissue region.
         /// </summary>
         /// <param name="nodes">array of nodes</param>
-        /// <param name="op">OpticalProperties of tetrahedron</param>
-        public TetrahedronRegion(Position[] nodes, OpticalProperties op)
+        /// <param name="opticalPropertyIndex">Optical Property Index of tetrahedron from list in 
+        /// TetrahedralMeshData</param>
+        public TetrahedronRegion(Position[] nodes, OpticalProperties ops)
         {
-            Nodes = nodes;
-            RegionOP = op;
+            RegionOP = ops;
             Center = new Position(
                 (nodes[0].X + nodes[1].X + nodes[2].X + nodes[3].X) / 4,
                 (nodes[0].Y + nodes[1].Y + nodes[2].Y + nodes[3].Y) / 4,
@@ -40,12 +40,8 @@ namespace Vts.MonteCarlo.Tissues
                 new Position(0, 0, 1),
                 new Position(0, 1, 0),
                 new Position(1, 0, 0) },
-            new OpticalProperties(0.05, 1.0, 0.8, 1.4)) {}
+            new OpticalProperties(0.01, 1, 0.8, 1.4)) {}
 
-        /// <summary>
-        /// nodes of tetrahedron
-        /// </summary>
-        public Position[] Nodes { get; private set; }
         /// <summary>
         /// optical properties of tetrahedron
         /// </summary>
@@ -59,7 +55,7 @@ namespace Vts.MonteCarlo.Tissues
         /// </summary>
         public double Volume { get; private set; }
         /// <summary>
-        /// array of node indices that describe the 4 triangles
+        /// array of triangles that describe the 4 triangles
         /// </summary>
         public TriangleRegion[] Triangles { get; private set; }
 

@@ -18,8 +18,7 @@ namespace Vts.MonteCarlo.Tissues
             TetrahedronRegions = null;
         }
         /// <summary>
-        /// array of nodes of tetrahedrons
-        /// not sure if I can get away with Ilist here and for regions
+        /// nodes of tetrahedrons
         /// </summary>
         public Position[] Nodes;
         /// <summary>
