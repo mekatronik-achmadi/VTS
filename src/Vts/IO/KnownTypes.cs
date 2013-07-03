@@ -83,6 +83,9 @@ namespace Vts.IO
 					typeof (MultiLayerTissueInput),
 					typeof (MultiEllipsoidTissueInput),
 					typeof (SingleEllipsoidTissueInput),
+                    typeof (MultiTetrahedronInCubeTissueInput),
+                    typeof (TetrahedronRegion),
+                    typeof (TriangleRegion),
 					typeof (LayerRegion), 
 					typeof (EllipsoidRegion),				
                 };

@@ -1132,6 +1132,9 @@
     <Compile Include="..\Vts\MonteCarlo\Tissues\SingleInclusionTissue.cs">
       <Link>MonteCarlo\Tissues\SingleInclusionTissue.cs</Link>
     </Compile>
+    <Compile Include="..\Vts\MonteCarlo\Tissues\TetrahedralMeshData.cs">
+      <Link>MonteCarlo\Tissues\TetrahedralMeshData.cs</Link>
+    </Compile>
     <Compile Include="..\Vts\MonteCarlo\Tissues\TetrahedronRegion.cs">
       <Link>MonteCarlo\Tissues\TetrahedronRegion.cs</Link>
     </Compile>
@@ -1162,7 +1165,6 @@
     <Compile Include="..\Vts\MonteCarlo\VirtualBoundaries\SpecularReflectanceVirtualBoundary.cs">
       <Link>MonteCarlo\VirtualBoundaries\SpecularReflectanceVirtualBoundary.cs</Link>
     </Compile>
-    <Compile Include="MonteCarlo\Tissues\TetrahedralMeshData.cs" />
     <Compile Include="MonteCarlo\Unmanaged\UnmanagedDetectorDefinition.cs" />
     <Compile Include="MonteCarlo\Unmanaged\UnmanagedFlags.cs" />
     <Compile Include="MonteCarlo\Unmanaged\UnmanagedHistory.cs" />

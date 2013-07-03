@@ -34,12 +34,12 @@ namespace Vts.MonteCarlo.Detectors
             )
         {
             TetrahedralMesh = ((MultiTetrahedronInCubeTissue) tissue).MeshData;
-            Mean = new double[TetrahedralMesh.TetrahedronRegions.Length - 1];
+            Mean = new double[TetrahedralMesh.TetrahedronRegions.Count - 1];
             _tallySecondMoment = tallySecondMoment;
             SecondMoment = null;
             if (_tallySecondMoment)
             {
-                SecondMoment = new double[TetrahedralMesh.TetrahedronRegions.Length - 1];
+                SecondMoment = new double[TetrahedralMesh.TetrahedronRegions.Count - 1];
             }
             TallyType = TallyType.FluenceOfXAndYAndZ;
             Name = name;
@@ -96,8 +96,7 @@ namespace Vts.MonteCarlo.Detectors
         /// <param name="currentRegionIndex">index of region photon current is in</param>
         public void TallySingle(PhotonDataPoint previousDP, PhotonDataPoint dp, int currentRegionIndex)
         {
-            // determine which tetrahedron dp is in, index = it
-            var it = 1;
+            var it = currentRegionIndex;
 
             var weight = _absorptionWeightingMethod(previousDP, dp, currentRegionIndex);
 
@@ -163,7 +162,7 @@ namespace Vts.MonteCarlo.Detectors
         /// <param name="numPhotons">number of photons launched</param>
         public void Normalize(long numPhotons)
         {
-            for (int it = 0; it < TetrahedralMesh.TetrahedronRegions.Length - 1; it++)
+            for (int it = 0; it < TetrahedralMesh.TetrahedronRegions.Count - 1; it++)
             {
                 // determine volume of tetrahedron
                 var normalizationFactor = 1;

@@ -238,6 +238,7 @@
     <Compile Include="MonteCarlo\Detectors\CAWLayersDetectorsTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MonteCarlo\Detectors\FluenceTetrahedralMeshDetectorTests.cs" />
     <Compile Include="MonteCarlo\Detectors\pMCCAWOneLayerDetectorsTests.cs" />
     <Compile Include="MonteCarlo\Detectors\pMCDAWOneLayerDetectorsTests.cs" />
     <Compile Include="MonteCarlo\Detectors\pMCCAWLayersDetectorsTests.cs" />

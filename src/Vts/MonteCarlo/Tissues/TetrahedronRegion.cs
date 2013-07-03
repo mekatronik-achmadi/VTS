@@ -25,6 +25,7 @@ namespace Vts.MonteCarlo.Tissues
                 (nodes[0].X + nodes[1].X + nodes[2].X + nodes[3].X) / 4,
                 (nodes[0].Y + nodes[1].Y + nodes[2].Y + nodes[3].Y) / 4,
                 (nodes[0].Z + nodes[1].Z + nodes[2].Z + nodes[3].Z) / 4);
+            Triangles = new TriangleRegion[4];
             // tech question: does this order matter?
             Triangles[0] = new TriangleRegion(new Position[] { nodes[0], nodes[1], nodes[2] });
             Triangles[1] = new TriangleRegion(new Position[] { nodes[0], nodes[1], nodes[3] });
@@ -45,7 +46,7 @@ namespace Vts.MonteCarlo.Tissues
         /// <summary>
         /// optical properties of tetrahedron
         /// </summary>
-        public OpticalProperties RegionOP { get; private set; }
+        public OpticalProperties RegionOP { get; set; }
         /// <summary>
         /// center of tetrahedron
         /// </summary>
@@ -61,13 +62,14 @@ namespace Vts.MonteCarlo.Tissues
 
 
         /// <summary>
+        /// this method is not used by MultiTetrahedronInCubeTissue so always returns false
         /// method to determine if given Position lies within tetrahedron
         /// </summary>
         /// <param name="position">Position</param>
         /// <returns>boolean, true if within, false otherwise</returns>
         public bool ContainsPosition(Position position)
         {
-            return true;
+            return false;
         }
         /// <summary>
         /// method to determine if given Position lies on boundary of tetrahedron

@@ -17,6 +17,8 @@ namespace Vts.MonteCarlo.Tissues
         public TriangleRegion(Position[] nodes)
         {
             Nodes = nodes;
+            NodeIndices = new int[4];
+            TetrahedronIndices = new int[2] { -1, -1 }; // -1 denotes not set
             InitializeTriangleRegion(nodes);
         }
 
@@ -34,7 +36,7 @@ namespace Vts.MonteCarlo.Tissues
         /// <summary>
         /// nodes of Triangle
         /// </summary>
-        public Position[] Nodes { get; private set; }
+        public IList<Position> Nodes { get; private set; }
         /// <summary>
         /// int indicating boundary index of triangle 
         /// </summary>
