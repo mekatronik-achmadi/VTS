@@ -2,9 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Vts.Common;
-using Vts.Extensions;
-using Vts.MonteCarlo;
-using Vts.MonteCarlo.PhotonData;
 
 namespace Vts.MonteCarlo.Tissues
 {
@@ -34,9 +31,6 @@ namespace Vts.MonteCarlo.Tissues
         {
             _layerRegions = regions.Select(region => (LayerRegion) region).ToArray();
         }
-
-      
-
         
         /// <summary>
         /// Creates an instance of a MultiLayerTissue based on an input data class 
@@ -63,6 +57,7 @@ namespace Vts.MonteCarlo.Tissues
             : this(new MultiLayerTissueInput().Regions, AbsorptionWeightingType.Discrete, PhaseFunctionType.HenyeyGreenstein, 0.0)
         {
         }
+
         /// <summary>
         /// method to determine region index of region photon is currently in
         /// </summary>

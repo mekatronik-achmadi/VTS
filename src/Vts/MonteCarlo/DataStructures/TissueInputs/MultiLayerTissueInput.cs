@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.Serialization;
 using Vts.Common;
 using Vts.MonteCarlo.Tissues;
-using Vts.MonteCarlo.DataStructuresValidation;
 
 namespace Vts.MonteCarlo
 {
@@ -23,6 +19,7 @@ namespace Vts.MonteCarlo
         /// <param name="regions">list of tissue regions comprising tissue</param>
         public MultiLayerTissueInput(ITissueRegion[] regions)
         {
+            TissueType = TissueType.MultiLayer;
             _regions = regions;
         }
 
@@ -45,11 +42,11 @@ namespace Vts.MonteCarlo
                 })
         {
         }
+
         /// <summary>
         /// tissue identifier
         /// </summary>
-        [IgnoreDataMember]
-        public TissueType TissueType { get { return TissueType.MultiLayer; } }
+        public TissueType TissueType { get; set; }
         /// <summary>
         /// list of tissue regions comprising tissue
         /// </summary>

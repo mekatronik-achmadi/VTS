@@ -1,7 +1,5 @@
 using System;
-using System.Runtime.Serialization;
 using Vts.Common;
-using Vts.Extensions;
 
 namespace Vts.MonteCarlo.Tissues
 {
@@ -21,6 +19,7 @@ namespace Vts.MonteCarlo.Tissues
         /// <param name="awt">absorption weighting type</param>
         public CylinderRegion(Position center, double radius, double height, OpticalProperties op, AbsorptionWeightingType awt) 
         {
+            TissueRegionType = TissueRegionType.Cylinder;
             Center = center;
             Radius = radius;
             Height = height;
@@ -31,6 +30,11 @@ namespace Vts.MonteCarlo.Tissues
         /// </summary>
         public CylinderRegion() : this(new Position(0, 0, 5), 1, 5, 
             new OpticalProperties(0.01, 1.0, 0.8, 1.4), AbsorptionWeightingType.Discrete) {}
+
+        /// <summary>
+        /// tissue region identifier
+        /// </summary>
+        public TissueRegionType TissueRegionType { get; set; }
 
         /// <summary>
         /// center of cyliner

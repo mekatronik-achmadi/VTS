@@ -3,22 +3,19 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.IsolatedStorage;
 using System.Linq;
+using System.Security;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using GalaSoft.MvvmLight.Command;
 using SLExtensions.Input;
-using Vts.Common;
 using Vts.Common.Logging;
-using Vts.Extensions;
 using Vts.Gui.Silverlight.Input;
 using Vts.Gui.Silverlight.Model;
 using Vts.Gui.Silverlight.View;
 using Vts.IO;
 using Vts.MonteCarlo;
 using Vts.MonteCarlo.IO;
-using Vts.MonteCarlo.Tissues;
-using System.Security;
 
 namespace Vts.Gui.Silverlight.ViewModel
 {
@@ -255,7 +252,7 @@ namespace Vts.Gui.Silverlight.ViewModel
                     logger.Info(() => "Saving simulation results to temporary directory...");
                     string resultsFolder = input.OutputName;
                     FileIO.CreateDirectory(resultsFolder);
-                    input.ToFile(Path.Combine(resultsFolder, "infile_" + input.OutputName + ".xml"));
+                    input.ToXMLFile(Path.Combine(resultsFolder, "infile_" + input.OutputName + ".xml"));
 
                     foreach (var result in _output.ResultsDictionary.Values)
                     {
@@ -266,9 +263,12 @@ namespace Vts.Gui.Silverlight.ViewModel
                     var store = IsolatedStorageFile.GetUserStoreForApplication();
                     if (store.DirectoryExists(resultsFolder))
                     {
-                        var fileNames = store.GetFileNames(resultsFolder + @"\*");
-
+                        // add the MATLAB files to isolated storage so they can be included in the zip file
+                        FileIO.CopyFileFromResources("Resources/Matlab/load_results_script.m", Path.Combine(resultsFolder, "load_results_script.m"), "Vts.Gui.Silverlight");
+                        FileIO.CopyFileFromResources("Resources/Matlab/loadMCResults.m", Path.Combine(resultsFolder, "loadMCResults.m"), "Vts.Gui.Silverlight");
+                        FileIO.CopyFileFromResources("Resources/Matlab/readBinaryData.m", Path.Combine(resultsFolder, "readBinaryData.m"), "Vts.Gui.Silverlight");
                         // then, zip all these together and store *that* .zip to isolated storage as well
+                        var fileNames = store.GetFileNames(resultsFolder + @"\*");
                         try
                         {
                             FileIO.ZipFiles(fileNames, resultsFolder, resultsFolder + ".zip");
@@ -338,10 +338,21 @@ namespace Vts.Gui.Silverlight.ViewModel
 
                     foreach (var file in files)
                     {
-                        file.Input.ToFile(file.Name);
+                        file.Input.ToXMLFile(file.Name);
                     }
+                    var jsonFiles = SimulationInputProvider.GenerateAllSimulationInputs().Select(input =>
+                        new
+                        {
+                            Name = "infile_" + input.OutputName + ".txt",
+                            Input = input
+                        });
 
-                    FileIO.ZipFiles(files.Select(file => file.Name), "", stream);
+                    foreach (var file in jsonFiles)
+                    {
+                        file.Input.ToXMLFile(file.Name);
+                    }
+                    var allFiles = files.Concat(jsonFiles);
+                    FileIO.ZipFiles(allFiles.Select(file => file.Name), "", stream);
                     logger.Info(() => "Template simulation input files exported to a zip file.\r");
                 }
             }

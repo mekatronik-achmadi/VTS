@@ -1,7 +1,6 @@
 using System;
 using System.Runtime.Serialization;
 using Vts.Common;
-using Vts.Extensions;
 
 namespace Vts.MonteCarlo.Tissues
 {
@@ -22,6 +21,7 @@ namespace Vts.MonteCarlo.Tissues
         public VoxelRegion(DoubleRange x, DoubleRange y, DoubleRange z, OpticalProperties op,
                            AbsorptionWeightingType awt)
         {
+            TissueRegionType = TissueRegionType.Voxel;
             X = x;
             Y = y;
             Z = z;
@@ -38,6 +38,11 @@ namespace Vts.MonteCarlo.Tissues
             new OpticalProperties(0.01, 1.0, 0.8, 1.4), AbsorptionWeightingType.Discrete)
         {
         }
+
+        /// <summary>
+        /// tissue region identifier
+        /// </summary>
+        public TissueRegionType TissueRegionType { get; set; }
 
         /// <summary>
         /// x range of voxel

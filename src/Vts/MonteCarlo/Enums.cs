@@ -1,4 +1,5 @@
 using System;
+
 namespace Vts.MonteCarlo
 {
     /// <summary>
@@ -359,6 +360,14 @@ namespace Vts.MonteCarlo
         /// Tissue cude with multiple tetrahedra
         /// </summary>
         MultiTetrahedronInCube,
+    }
+    
+    public enum TissueRegionType
+    {
+        Voxel,
+        Layer,
+        Ellipsoid,
+        Cylinder
     }
 
     ///// <summary>
