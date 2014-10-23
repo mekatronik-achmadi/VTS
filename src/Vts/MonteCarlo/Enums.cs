@@ -371,7 +371,8 @@ namespace Vts.MonteCarlo
         Voxel,
         Layer,
         Ellipsoid,
-        Cylinder
+        Cylinder,
+        Tetrahedron,
     }
 
     ///// <summary>
@@ -465,6 +466,10 @@ namespace Vts.MonteCarlo
             /// Fluence as a function of x, y and z
             /// </summary>
             "FluenceOfXAndYAndZ",
+            /// <summary>
+            /// Fluence as a function of a tetrahedral mesh
+            /// </summary>   
+            "FluenceOfTetrahedralMesh",
             /// <summary>
             /// Absorbed energy as a function of source-detector separation (rho) and tissue depth (Z)
             /// </summary>

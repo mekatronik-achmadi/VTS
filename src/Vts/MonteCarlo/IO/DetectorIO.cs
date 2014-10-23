@@ -157,10 +157,6 @@ namespace Vts.MonteCarlo.IO
                             binaryArraySerializer.WriteData(bw);
                         }
                     }
-                    case TallyType.FluenceOfTetrahedralMesh:
-                        FileIO.WriteToXML((FluenceOfTetrahedralMeshDetector)detector, filePath + ".xml");
-                        break;
-
                 }
             }
             catch (Exception e)
@@ -503,11 +499,11 @@ namespace Vts.MonteCarlo.IO
                 //        dMCdROfRhodMuaDetector.Mean = (double[])FileIO.ReadArrayFromBinaryInResources<double>(filePath, projectName, dMCdROfRhodMuaDetectorDims);
                 //        return dMCdROfRhodMuaDetector;
 
-                    case TallyType.FluenceOfTetrahedralMesh:
-                        var fluenceOfTetrahedralMeshDetector = FileIO.ReadFromXMLInResources<FluenceOfTetrahedralMeshDetector>(filePath + ".xml", projectName);
-                        var fluenceOfTetrahedralMeshDetectorDims = new int[] { fluenceOfTetrahedralMeshDetector.Mean.Length - 1 };
-                        fluenceOfTetrahedralMeshDetector.Mean = (double[])FileIO.ReadArrayFromBinaryInResources<double>(filePath, projectName, fluenceOfTetrahedralMeshDetectorDims);
-                        return fluenceOfTetrahedralMeshDetector;
+                    //case TallyType.FluenceOfTetrahedralMesh:
+                    //    var fluenceOfTetrahedralMeshDetector = FileIO.ReadFromXMLInResources<FluenceOfTetrahedralMeshDetector>(filePath + ".xml", projectName);
+                    //    var fluenceOfTetrahedralMeshDetectorDims = new int[] { fluenceOfTetrahedralMeshDetector.Mean.Length - 1 };
+                    //    fluenceOfTetrahedralMeshDetector.Mean = (double[])FileIO.ReadArrayFromBinaryInResources<double>(filePath, projectName, fluenceOfTetrahedralMeshDetectorDims);
+                    //    return fluenceOfTetrahedralMeshDetector;
 
                 //        var tOfRhoDetector = FileIO.ReadFromXMLInResources<TOfRhoDetector>(filePath + ".xml", projectName);
                 //        tOfRhoDetector.Mean = (double[])FileIO.ReadArrayFromBinaryInResources<double>(filePath, projectName);

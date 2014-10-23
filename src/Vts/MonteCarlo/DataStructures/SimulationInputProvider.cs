@@ -633,7 +633,6 @@ namespace Vts.MonteCarlo
                     AbsorptionWeightingType.Continuous,
                     PhaseFunctionType.HenyeyGreenstein,
                     new List<DatabaseType>() { }, // databases to be written
-                    true, // tally Second Moment
                     true, // track statistics
                     0.0, // RR threshold -> no RR performed
                     0),

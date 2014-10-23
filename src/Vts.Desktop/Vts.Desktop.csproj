@@ -583,9 +583,6 @@
     <Compile Include="..\Vts\MonteCarlo\DataStructuresValidation\ValidationResult.cs">
       <Link>MonteCarlo\DataStructuresValidation\ValidationResult.cs</Link>
     </Compile>
-    <Compile Include="..\Vts\MonteCarlo\DataStructures\DetectorInputs\FluenceOfTetrahedralMeshDetectorInput.cs">
-      <Link>MonteCarlo\DataStructures\DetectorInputs\FluenceOfTetrahedralMeshDetectorInput.cs</Link>
-    </Compile>
     <Compile Include="..\Vts\MonteCarlo\DataStructures\PostProcessorInputs\PostProcessorInput.cs">
       <Link>MonteCarlo\DataStructures\PostProcessorInputs\PostProcessorInput.cs</Link>
     </Compile>
@@ -681,6 +678,9 @@
     </Compile>
     <Compile Include="..\Vts\MonteCarlo\DataStructures\TissueInputs\MultiTetrahedronInCubeTissueInput.cs">
       <Link>MonteCarlo\DataStructures\TissueInputs\MultiTetrahedronInCubeTissueInput.cs</Link>
+    </Compile>
+    <Compile Include="..\Vts\MonteCarlo\DataStructures\TissueInputs\SemiInfiniteTissueInput.cs">
+      <Link>MonteCarlo\DataStructures\TissueInputs\SemiInfiniteTissueInput.cs</Link>
     </Compile>
     <Compile Include="..\Vts\MonteCarlo\DataStructures\TissueInputs\SingleEllipsoidTissueInput.cs">
       <Link>MonteCarlo\DataStructures\TissueInputs\SingleEllipsoidTissueInput.cs</Link>
@@ -1077,6 +1077,9 @@
     </Compile>
     <Compile Include="..\Vts\MonteCarlo\Tissues\MultiTetrahedronInCubeTissue.cs">
       <Link>MonteCarlo\Tissues\MultiTetrahedronInCubeTissue.cs</Link>
+    </Compile>
+    <Compile Include="..\Vts\MonteCarlo\Tissues\SemiInfiniteRegion.cs">
+      <Link>MonteCarlo\Tissues\SemiInfiniteRegion.cs</Link>
     </Compile>
     <Compile Include="..\Vts\MonteCarlo\Tissues\SingleInclusionTissue.cs">
       <Link>MonteCarlo\Tissues\SingleInclusionTissue.cs</Link>

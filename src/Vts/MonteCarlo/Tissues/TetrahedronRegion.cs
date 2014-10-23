@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Vts.Common;
+using Vts.SpectralMapping;
 
 namespace Vts.MonteCarlo.Tissues
 {
@@ -16,8 +17,7 @@ namespace Vts.MonteCarlo.Tissues
         /// class specifies tetrahedron tissue region.
         /// </summary>
         /// <param name="nodes">array of nodes</param>
-        /// <param name="opticalPropertyIndex">Optical Property Index of tetrahedron from list in 
-        /// TetrahedralMeshData</param>
+        /// <param name="ops">Optical Property Index of tetrahedron from list in TetrahedralMeshData</param>
         public TetrahedronRegion(Position[] nodes, OpticalProperties ops)
         {
             RegionOP = ops;
@@ -25,6 +25,7 @@ namespace Vts.MonteCarlo.Tissues
                 (nodes[0].X + nodes[1].X + nodes[2].X + nodes[3].X) / 4,
                 (nodes[0].Y + nodes[1].Y + nodes[2].Y + nodes[3].Y) / 4,
                 (nodes[0].Z + nodes[1].Z + nodes[2].Z + nodes[3].Z) / 4);
+            TissueRegionType = TissueRegionType.Tetrahedron;
             Triangles = new TriangleRegion[4];
             // tech question: does this order matter?
             Triangles[0] = new TriangleRegion(new Position[] { nodes[0], nodes[1], nodes[2] });
@@ -51,6 +52,10 @@ namespace Vts.MonteCarlo.Tissues
         /// center of tetrahedron
         /// </summary>
         public Position Center { get; private set; }
+        /// <summary>
+        /// tissue region identifier
+        /// </summary>
+        public TissueRegionType TissueRegionType { get; set; }
         /// <summary>
         /// volume of tetrahedron
         /// </summary>

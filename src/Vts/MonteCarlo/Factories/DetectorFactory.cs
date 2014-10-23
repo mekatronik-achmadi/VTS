@@ -62,9 +62,6 @@ namespace Vts.MonteCarlo.Factories
         {
             if (detectorInput == null)
             {
-                case TallyType.FluenceOfTetrahedralMesh:
-                    var ftminput = (FluenceOfTetrahedralMeshDetectorInput)detectorInput;
-                    return new FluenceOfTetrahedralMeshDetector(tissue, tallySecondMoment, ftminput.Name);
                 return null;
             }
 
