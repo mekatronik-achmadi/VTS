@@ -16,44 +16,11 @@ namespace Vts.IO
 
         static KnownTypes()
         {
-            var knownTypesArray = new [] {
+            var knownTypesArray = new Type[] {	
                     typeof (FluenceOfTetrahedralMeshDetector),
-				
-				    // in order of files in folder Vts.MonteCarlo.DataStructures.SourceInput				
-                    typeof (CustomLineSourceInput),
-                    typeof (DirectionalLineSourceInput),
-					typeof (IsotropicLineSourceInput),
-				
-                    typeof (CustomPointSourceInput),
-					typeof (DirectionalPointSourceInput),
-                    typeof (IsotropicPointSourceInput),
-				
-					typeof (LambertianSurfaceEmittingCylindricalFiberSourceInput),
-					typeof (CustomSurfaceEmittingSphericalSourceInput),
-					typeof (LambertianSurfaceEmittingSphericalSourceInput),
-					typeof (LambertianSurfaceEmittingTubularSourceInput),
-				
-					typeof (CustomCircularSourceInput),
-					typeof (DirectionalCircularSourceInput),
-					typeof (CustomEllipticalSourceInput),
-					typeof (DirectionalEllipticalSourceInput),
-					typeof (CustomRectangularSourceInput),
-					typeof (DirectionalRectangularSourceInput),
-				
-					typeof (CustomVolumetricEllipsoidalSourceInput),
-					typeof (IsotropicVolumetricEllipsoidalSourceInput),
-					typeof (CustomVolumetricCuboidalSourceInput),
-					typeof (IsotropicVolumetricCuboidalSourceInput),
-				
-					// tissue types
-					typeof (MultiLayerTissueInput),
-					typeof (MultiEllipsoidTissueInput),
-					typeof (SingleEllipsoidTissueInput),
                     typeof (MultiTetrahedronInCubeTissueInput),
                     typeof (TetrahedronRegion),
                     typeof (TriangleRegion),
-					typeof (LayerRegion), 
-					typeof (EllipsoidRegion),				
                 };
 
             _types = knownTypesArray.ToDictionary(type => type.ToString());
