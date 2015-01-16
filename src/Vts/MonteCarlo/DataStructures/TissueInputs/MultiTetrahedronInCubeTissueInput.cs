@@ -10,7 +10,7 @@ namespace Vts.MonteCarlo
     /// <summary>
     /// Implements ITissueInput.  Defines input to MultiTetrahedronInCubeTissue class.
     /// </summary>
-    [KnownType(typeof(TetrahedronRegion))]
+    [KnownType(typeof(TetrahedronTissueRegion))]
     [KnownType(typeof(TriangleRegion))]
     [KnownType(typeof(OpticalProperties))]
     [KnownType(typeof(string))]
@@ -39,7 +39,7 @@ namespace Vts.MonteCarlo
                 new ITissueRegion[]
                 { 
                     // need to determine how to bring in list of tetrahedra
-                    new TetrahedronRegion()
+                    new TetrahedronTissueRegion()
                 },
         "cube")
         {

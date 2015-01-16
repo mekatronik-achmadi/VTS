@@ -642,7 +642,7 @@ namespace Vts.MonteCarlo
                     new Direction(0.0, 0.0, 1.0),
                     0), // 0=start in air, 1=start in tissue, start in tissue so no MT tally at tissue crossing in air
                 new MultiTetrahedronInCubeTissueInput(
-                    new ITissueRegion[] { new TetrahedronRegion(), }, "cube"
+                    new ITissueRegion[] { new TetrahedronTissueRegion(), }, "cube"
                 ),
                 new List<IDetectorInput>()
                 {

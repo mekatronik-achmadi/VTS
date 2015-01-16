@@ -8,7 +8,7 @@ namespace Vts.MonteCarlo.Tissues
     /// <summary>
     /// Implements ITissueRegion.  Defines tetrahedron given 4 nodes.
     /// </summary>
-    public class TetrahedronRegion : ITissueRegion
+    public class TetrahedronTissueRegion : ITissueRegion
     {
         private int _numTriangles = 4;  // number of triangles defined by tetrahedron
         private bool _onBoundary = false;
@@ -18,7 +18,7 @@ namespace Vts.MonteCarlo.Tissues
         /// </summary>
         /// <param name="nodes">array of nodes</param>
         /// <param name="ops">Optical Property Index of tetrahedron from list in TetrahedralMeshData</param>
-        public TetrahedronRegion(Position[] nodes, OpticalProperties ops)
+        public TetrahedronTissueRegion(Position[] nodes, OpticalProperties ops)
         {
             RegionOP = ops;
             Center = new Position(
@@ -36,7 +36,7 @@ namespace Vts.MonteCarlo.Tissues
         /// <summary>
         /// default constructor defines tetrahedron at origin 
         /// </summary>
-        public TetrahedronRegion() : this (
+        public TetrahedronTissueRegion() : this (
             new Position[] { 
                 new Position(0, 0, 0),
                 new Position(0, 0, 1),

@@ -13,7 +13,7 @@ namespace Vts.MonteCarlo.Tissues
     /// </summary>
     public class MultiTetrahedronInCubeTissue : TissueBase
     {
-        private TetrahedronRegion _currentTetrahedronRegion;
+        private TetrahedronTissueRegion _currentTetrahedronRegion;
 
         /// <summary>
         /// Creates an instance of a MultiTetrahedronInCubeTissue

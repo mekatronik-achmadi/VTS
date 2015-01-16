@@ -26,7 +26,7 @@ namespace Vts.MonteCarlo.Tissues
             }
             else // load mesh data from parameter regions
             {
-                TetrahedronRegions = regions.Select(region => (TetrahedronRegion)region).ToList();
+                TetrahedronRegions = regions.Select(region => (TetrahedronTissueRegion)region).ToList();
                 // the following distinct does not eliminate duplicates, but can work with duplicated list for now
                 OptPropertiesList = (regions.Select(region => region.RegionOP)).Distinct().ToList();
                 Nodes = TetrahedronRegions.SelectMany(t => t.Triangles).SelectMany(s => s.Nodes).ToList();
@@ -44,7 +44,7 @@ namespace Vts.MonteCarlo.Tissues
         /// <summary>
         /// array of tetrahedron regions and their optical properties
         /// </summary>
-        public IList<TetrahedronRegion> TetrahedronRegions;
+        public IList<TetrahedronTissueRegion> TetrahedronRegions;
 
         private void InitializeTriangleData()
         {
@@ -198,7 +198,7 @@ namespace Vts.MonteCarlo.Tissues
                 {
                     text = srElements.ReadLine();
                     string[] bits = text.Split(' ');
-                    data.TetrahedronRegions.Add(new TetrahedronRegion(
+                    data.TetrahedronRegions.Add(new TetrahedronTissueRegion(
                         new Position[]
                             {
                                 data.Nodes[int.Parse(bits[0])],

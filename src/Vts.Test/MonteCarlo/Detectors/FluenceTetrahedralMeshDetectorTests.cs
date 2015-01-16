@@ -52,15 +52,15 @@ namespace Vts.Test.MonteCarlo.Detectors
                  new MultiTetrahedronInCubeTissueInput(
                      new ITissueRegion[]
                     { 
-                        new TetrahedronRegion( new Position[] { vertex1, vertex2, vertex3, vertex6 }, 
+                        new TetrahedronTissueRegion( new Position[] { vertex1, vertex2, vertex3, vertex6 }, 
                             new OpticalProperties(0.01, 1, 0.8, 1.4)), 
-                        new TetrahedronRegion( new Position[] { vertex1, vertex3, vertex4, vertex8 }, 
+                        new TetrahedronTissueRegion( new Position[] { vertex1, vertex3, vertex4, vertex8 }, 
                             new OpticalProperties(0.01, 1, 0.8, 1.4)),
-                        new TetrahedronRegion( new Position[] { vertex1, vertex3, vertex6, vertex8 }, 
+                        new TetrahedronTissueRegion( new Position[] { vertex1, vertex3, vertex6, vertex8 }, 
                             new OpticalProperties(0.01, 1, 0.8, 1.4)),
-                        new TetrahedronRegion( new Position[] { vertex1, vertex5, vertex6, vertex8 }, 
+                        new TetrahedronTissueRegion( new Position[] { vertex1, vertex5, vertex6, vertex8 }, 
                             new OpticalProperties(0.01, 1, 0.8, 1.4)),
-                        new TetrahedronRegion(new Position[] { vertex3, vertex6, vertex7, vertex8 }, 
+                        new TetrahedronTissueRegion(new Position[] { vertex3, vertex6, vertex7, vertex8 }, 
                             new OpticalProperties(0.01, 1, 0.8, 1.4)),
                     },
                     ""

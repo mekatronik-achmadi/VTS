@@ -348,7 +348,7 @@ namespace Vts.MonteCarlo
     /// </summary>
     public static class TissueType
     {
-        public static readonly string[] BuiltInTypes = new []
+        public static readonly string[] BuiltInTypes = new[]
         {
             /// <summary>
             /// SemiInfinite tissue type.  Includes homogeneous tissues.
@@ -366,10 +366,11 @@ namespace Vts.MonteCarlo
             /// Tissue slab with multiple embedded ellipsoids
             /// </summary>
             "MultiEllipsoid",
-        /// <summary>
-        /// Tissue cude with multiple tetrahedra
-        /// </summary>
-        MultiTetrahedronInCube,
+            /// <summary>
+            /// Tissue cude with multiple tetrahedra
+            /// </summary>
+            "MultiTetrahedronInCube",
+        };
     }
     
     public static class TissueRegionType

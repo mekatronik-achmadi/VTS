@@ -19,7 +19,7 @@ namespace Vts.IO
             var knownTypesArray = new Type[] {	
                     typeof (FluenceOfTetrahedralMeshDetector),
                     typeof (MultiTetrahedronInCubeTissueInput),
-                    typeof (TetrahedronRegion),
+                    typeof (TetrahedronTissueRegion),
                     typeof (TriangleRegion),
                 };
 

@@ -610,9 +610,6 @@
     <Compile Include="..\Vts\MonteCarlo\DataStructures\TissueInputs\MultiTetrahedronInCubeTissueInput.cs">
       <Link>MonteCarlo\DataStructures\TissueInputs\MultiTetrahedronInCubeTissueInput.cs</Link>
     </Compile>
-    <Compile Include="..\Vts\MonteCarlo\DataStructures\TissueInputs\SemiInfiniteTissueInput.cs">
-      <Link>MonteCarlo\DataStructures\TissueInputs\SemiInfiniteTissueInput.cs</Link>
-    </Compile>
     <Compile Include="..\Vts\MonteCarlo\Detectors\AOfRhoAndZDetector.cs">
       <Link>MonteCarlo\Detectors\AOfRhoAndZDetector.cs</Link>
     </Compile>
@@ -1006,8 +1003,9 @@
     <Compile Include="..\Vts\MonteCarlo\Tissues\MultiLayerTissue.cs">
       <Link>MonteCarlo\Tissues\MultiLayerTissue.cs</Link>
     </Compile>
-        <Compile Include="..\Vts\MonteCarlo\Tissues\SemiInfiniteTissue.cs">
+    <Compile Include="..\Vts\MonteCarlo\Tissues\SemiInfiniteTissue.cs">
       <Link>MonteCarlo\Tissues\SemiInfiniteTissue.cs</Link>
+    </Compile>
     <Compile Include="..\Vts\MonteCarlo\Tissues\MultiTetrahedronInCubeTissue.cs">
       <Link>MonteCarlo\Tissues\MultiTetrahedronInCubeTissue.cs</Link>
     </Compile>
