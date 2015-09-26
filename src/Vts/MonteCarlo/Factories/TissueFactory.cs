@@ -21,16 +21,6 @@ namespace Vts.MonteCarlo.Factories
         {
             ITissue t = ti.CreateTissue(awt, pft, russianRouletteWeightThreshold);
 
-            if (ti is MultiTetrahedronInCubeTissueInput)
-            {
-                var multiTetrahedronInCubeTissueInput = (MultiTetrahedronInCubeTissueInput) ti;
-                return new MultiTetrahedronInCubeTissue(
-                    multiTetrahedronInCubeTissueInput.Regions,
-                    multiTetrahedronInCubeTissueInput.MeshDataFilename,
-                    awt,
-                    pft,
-                    russianRouletteWeightThreshold);
-            }
             if (t == null)
                 throw new ArgumentException(
                     "Problem generating ITissue instance. Check that TissueInput, ti, has a matching ITissue definition.");

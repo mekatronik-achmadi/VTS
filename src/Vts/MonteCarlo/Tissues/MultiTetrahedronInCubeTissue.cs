@@ -1,17 +1,80 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.Serialization;
 using Vts.Common;
 using Vts.MonteCarlo.PhotonData;
 
 namespace Vts.MonteCarlo.Tissues
 {
     /// <summary>
+    /// Implements ITissueInput.  Defines input to MultiTetrahedronInCubeTissue class.
+    /// </summary>
+    public class MultiTetrahedronInCubeTissueInput : ITissueInput
+    {
+        private ITissueRegion[] _regions;
+        private string _meshDataFilename;
+
+        /// <summary>
+        /// constructor for Multi-tetrahedron in cube tissue input
+        /// </summary>
+        /// <param name="regions">list of tissue regions comprising tissue</param>
+        // Question: ITissue expects an array of ITissueRegion.  Can I use filename 
+        // to instantiate Regions?
+        public MultiTetrahedronInCubeTissueInput(ITissueRegion[] regions, string meshDataFilename)
+        {
+            _regions = regions;
+            _meshDataFilename = meshDataFilename;
+        }
+
+        /// <summary>
+        /// MultiTetrahedronInCubeTissue default constructor provides homogeneous tissue
+        /// </summary>
+        public MultiTetrahedronInCubeTissueInput()
+            : this(
+                new ITissueRegion[]
+                { 
+                    // need to determine how to bring in list of tetrahedra
+                    new TetrahedronTissueRegion()
+                },
+        "cube")
+        {
+        }
+        /// <summary>
+        /// tissue identifier
+        /// </summary>
+        public string TissueType { get { return "MultiTetrahedronInCube"; } }
+        /// <summary>
+        /// list of tissue regions comprising tissue
+        /// </summary>
+        public ITissueRegion[] Regions { get { return _regions; } set { _regions = value; } }
+        /// <summary>
+        /// filename of input mesh data
+        /// </summary>
+        public string MeshDataFilename { get { return _meshDataFilename; } set { _meshDataFilename = value; } }
+
+        /// <summary>
+        ///// Required factory method to create the corresponding 
+        ///// ITissue based on the ITissueInput data
+        /// </summary>
+        /// <param name="awt">Absorption Weighting Type</param>
+        /// <param name="pft">Phase Function Type</param>
+        /// <param name="russianRouletteWeightThreshold">Russian Roulette Weight Threshold</param>
+        /// <returns></returns>
+        public ITissue CreateTissue(AbsorptionWeightingType awt, PhaseFunctionType pft, double russianRouletteWeightThreshold)
+        {
+            var t = new MultiTetrahedronInCubeTissue(Regions, MeshDataFilename);
+
+            t.Initialize(awt, pft, russianRouletteWeightThreshold);
+
+            return t;
+        }
+    }
+    /// <summary>
     /// Implements ITissue.  Defines tissue geometries comprised of tetrahedra
     /// within cube volume with air around? 
     /// Data structures and processing reference: TIMOS software. 
     /// </summary>
-    public class MultiTetrahedronInCubeTissue : TissueBase
+    public class MultiTetrahedronInCubeTissue : TissueBase, ITissue
     {
         private TetrahedronTissueRegion _currentTetrahedronRegion;
 
@@ -20,45 +83,14 @@ namespace Vts.MonteCarlo.Tissues
         /// </summary>
         /// <param name="regions">list of tissue regions comprising tissue</param>
         /// <param name="meshDataFilename">filename of file containing mesh data output</param>
-        /// <param name="absorptionWeightingType">absorption weighting type</param>
-        /// <param name="phaseFunctionType">phase function type</param>
-        /// <param name="russianRouletteWeightThreshold">photon weight threshold to turn on Russian Roulette</param>
-        public MultiTetrahedronInCubeTissue(
+            public MultiTetrahedronInCubeTissue(
             IList<ITissueRegion> regions, 
-            string meshDataFilename,
-            AbsorptionWeightingType absorptionWeightingType, 
-            PhaseFunctionType phaseFunctionType,
-            double russianRouletteWeightThreshold)
-            : base(regions, absorptionWeightingType, phaseFunctionType,russianRouletteWeightThreshold)
+            string meshDataFilename)
+            : base(regions)
         {
             MeshData = new TetrahedralMeshData(regions, meshDataFilename);
         }
 
-        // Question: how to instantiate based on Input class if Regions not specified
-        /// <summary>
-        /// Creates an instance of a MultiTetrahedronInCubeTissue based on an input data class 
-        /// </summary>
-        /// <param name="input">multi-tetrahedron tissue input</param>
-        /// <param name="absorptionWeightingType">absorption weighting type</param>
-        /// <param name="phaseFunctionType">phase function type</param>
-        /// <param name="russianRouletteWeightThreshold">russian roulette weight threshold</param>
-        /// <remarks>air above and below tissue needs to be specified for a slab geometry</remarks>
-        public MultiTetrahedronInCubeTissue(
-            MultiTetrahedronInCubeTissueInput input, 
-            AbsorptionWeightingType absorptionWeightingType, 
-            PhaseFunctionType phaseFunctionType,
-            double russianRouletteWeightThreshold)
-            : this(input.Regions, input.MeshDataFilename, absorptionWeightingType, phaseFunctionType, russianRouletteWeightThreshold)
-        {
-        }
-        /// <summary>
-        /// Creates a default instance of a MultiTetrahedronInCubeTissue based on a homogeneous medium slab geometry
-        /// and discrete absorption weighting
-        /// </summary>
-        public MultiTetrahedronInCubeTissue() 
-            : this(new MultiTetrahedronInCubeTissueInput(), AbsorptionWeightingType.Discrete, PhaseFunctionType.HenyeyGreenstein, 0.0)
-        {
-        }
         /// <summary>
         /// MeshData contains all mesh related data
         /// </summary>
@@ -73,7 +105,7 @@ namespace Vts.MonteCarlo.Tissues
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        public override int GetRegionIndex(Position position)
+        public int GetRegionIndex(Position position)
         {
             return CurrentTetrahedronIndex;
         }
@@ -82,7 +114,7 @@ namespace Vts.MonteCarlo.Tissues
         /// Finds the distance to the next boundary independent of hitting it
         /// </summary>
         /// <param name="photon">current photon state</param>
-        public override double GetDistanceToBoundary(Photon photon)
+        public double GetDistanceToBoundary(Photon photon)
         {
             // first, check what region the photon is in
             int regionIndex = photon.CurrentRegionIndex;
@@ -112,7 +144,7 @@ namespace Vts.MonteCarlo.Tissues
         /// </summary>
         /// <param name="position">photon position</param>
         /// <returns></returns>
-        public override bool OnDomainBoundary(Position position)
+        public bool OnDomainBoundary(Position position)
         {
             // check 
             return true;
@@ -122,7 +154,7 @@ namespace Vts.MonteCarlo.Tissues
         /// </summary>
         /// <param name="photon">photon info including position and direction</param>
         /// <returns>region index</returns>
-        public override int GetNeighborRegionIndex(Photon photon)
+        public int GetNeighborRegionIndex(Photon photon)
         {
             
             return 1;
@@ -132,7 +164,7 @@ namespace Vts.MonteCarlo.Tissues
         /// </summary>
         /// <param name="position"></param>
         /// <returns></returns>
-        public override PhotonStateType GetPhotonDataPointStateOnExit(Position position)
+        public PhotonStateType GetPhotonDataPointStateOnExit(Position position)
         {
             // need to update this to account for exiting all sides of cube
             if (position.Z < 1e-10)
@@ -148,7 +180,7 @@ namespace Vts.MonteCarlo.Tissues
         /// <param name="positionCurrent"></param>
         /// <param name="directionCurrent"></param>
         /// <returns></returns>
-        public override Direction GetReflectedDirection(
+        public Direction GetReflectedDirection(
             Position positionCurrent, 
             Direction directionCurrent)
         {
@@ -166,7 +198,7 @@ namespace Vts.MonteCarlo.Tissues
         /// <param name="nNext">refractive index of next region</param>
         /// <param name="cosThetaSnell">cos(theta) resulting from Snell's law</param>
         /// <returns>direction</returns>
-        public override Direction GetRefractedDirection(
+        public Direction GetRefractedDirection(
             Position positionCurrent, 
             Direction directionCurrent, 
             double nCurrent, 
@@ -190,7 +222,7 @@ namespace Vts.MonteCarlo.Tissues
         /// </summary>
         /// <param name="photon"></param>
         /// <returns></returns>
-        public override double GetAngleRelativeToBoundaryNormal(Photon photon)
+        public double GetAngleRelativeToBoundaryNormal(Photon photon)
         {
             // need to update this to handle angled plane of tetra side
             return Math.Abs(photon.DP.Direction.Uz); // abs will work for upward normal and downward normal

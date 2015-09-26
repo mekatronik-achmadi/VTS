@@ -33,7 +33,7 @@ namespace Vts.MonteCarlo
                 FlatSourceOneLayerTissueROfRhoDetector(),
                 PointSourceMultiLayerMomentumTransferDetectors(),
                 PointSourceThreeLayerReflectedTimeOfRhoAndSubregionHistDetector(),
-                PointSourceSingleVoxelTissueROfXAndYAndFluenceOfXAndYAndZDetector
+                PointSourceSingleVoxelTissueROfXAndYAndFluenceOfXAndYAndZDetector(),
                 PointSourceMultiTetrahedronInCubeFluenceDetector()
             };
         }

@@ -613,9 +613,6 @@
     <Compile Include="..\Vts\MonteCarlo\DataStructures\SourceInputProvider.cs">
       <Link>MonteCarlo\DataStructures\SourceInputProvider.cs</Link>
     </Compile>
-    <Compile Include="..\Vts\MonteCarlo\DataStructures\TissueInputs\MultiTetrahedronInCubeTissueInput.cs">
-      <Link>MonteCarlo\DataStructures\TissueInputs\MultiTetrahedronInCubeTissueInput.cs</Link>
-    </Compile>
     <Compile Include="..\Vts\MonteCarlo\Detectors\AOfRhoAndZDetector.cs">
       <Link>MonteCarlo\Detectors\AOfRhoAndZDetector.cs</Link>
     </Compile>
@@ -642,6 +639,9 @@
     </Compile>
     <Compile Include="..\Vts\MonteCarlo\Detectors\FluenceOfTetrahedralMeshDetector.cs">
       <Link>MonteCarlo\Detectors\FluenceOfTetrahedralMeshDetector.cs</Link>
+    </Compile>
+    <Compile Include="..\Vts\MonteCarlo\Detectors\FluenceOfXAndYAndZAndOmegaDetector.cs">
+      <Link>MonteCarlo\Detectors\FluenceOfXAndYAndZAndOmegaDetector.cs</Link>
     </Compile>
     <Compile Include="..\Vts\MonteCarlo\Detectors\FluenceOfXAndYAndZDetector.cs">
       <Link>MonteCarlo\Detectors\FluenceOfXAndYAndZDetector.cs</Link>

@@ -4,6 +4,7 @@ using NUnit.Framework;
 using Vts.Common;
 using Vts.MonteCarlo;
 using Vts.MonteCarlo.Detectors;
+using Vts.MonteCarlo.Sources;
 using Vts.MonteCarlo.Tissues;
 
 namespace Vts.Test.MonteCarlo.Detectors
@@ -44,10 +45,10 @@ namespace Vts.Test.MonteCarlo.Detectors
                      false, // track statistics
                      0.0, // RR threshold -> 0 = no RR performed
                      0),
-                 new DirectionalPointSourceInput( // this is right on boundary of tetra, may need to move
+                 new DirectionalPointSourceInput(
                      new Position(0.0, 0.0, 0.0),
                      new Direction(0.0, 0.0, 1.0),
-                     0 // start in air
+                     1 // start inside tissue
                  ),
                  new MultiTetrahedronInCubeTissueInput(
                      new ITissueRegion[]

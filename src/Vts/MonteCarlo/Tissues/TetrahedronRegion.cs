@@ -25,7 +25,7 @@ namespace Vts.MonteCarlo.Tissues
                 (nodes[0].X + nodes[1].X + nodes[2].X + nodes[3].X) / 4,
                 (nodes[0].Y + nodes[1].Y + nodes[2].Y + nodes[3].Y) / 4,
                 (nodes[0].Z + nodes[1].Z + nodes[2].Z + nodes[3].Z) / 4);
-            TissueRegionType = TissueRegionType.Tetrahedron;
+            TissueRegionType = "Tetrahedron";
             Triangles = new TriangleRegion[4];
             // tech question: does this order matter?
             Triangles[0] = new TriangleRegion(new Position[] { nodes[0], nodes[1], nodes[2] });
@@ -55,7 +55,7 @@ namespace Vts.MonteCarlo.Tissues
         /// <summary>
         /// tissue region identifier
         /// </summary>
-        public TissueRegionType TissueRegionType { get; set; }
+        public string TissueRegionType { get; set; }
         /// <summary>
         /// volume of tetrahedron
         /// </summary>
