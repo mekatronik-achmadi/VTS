@@ -119,7 +119,9 @@ for di = 1:numDetectors
             ROfFx.Fx = linspace((tempFx.Start), (tempFx.Stop), (tempFx.Count));
             ROfFx.Fx_Midpoints = ROfFx.Fx;
             tempData = readBinaryData([datadir slash detector.Name],2*length(ROfFx.Fx));
-            ROfFx.Mean = tempData(1:2:end) + 1i*tempData(2:2:end);          
+            ROfFx.Mean = tempData(1:2:end) + 1i*tempData(2:2:end);    
+            ROfFx.Amplitude = abs(ROfFx.Mean);
+            ROfFx.Phase = -angle(ROfFx.Mean);
             if(detector.TallySecondMoment && exist([datadir slash detector.Name '_2'],'file'))
                 tempData = readBinaryData([datadir slash detector.Name '_2'],2*length(ROfFx.Fx));
                 ROfFx.SecondMoment = tempData(1:2:end) + 1i*tempData(2:2:end);
