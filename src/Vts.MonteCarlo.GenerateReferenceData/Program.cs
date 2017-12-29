@@ -19,7 +19,7 @@ namespace Vts.MonteCarlo.GenerateReferenceData
                         0,
                         RandomNumberGeneratorType.MersenneTwister,
                         AbsorptionWeightingType.Continuous,
-                        PhaseFunctionType.HenyeyGreenstein,
+                        PhaseFunctionType.HenyeyGreenstein, 
                         new List<DatabaseType>() { }, // databases to be written
                         false, // track statistics
                         0.0, // RR threshold -> 0 = no RR performed

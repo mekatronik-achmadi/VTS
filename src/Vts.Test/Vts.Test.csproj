@@ -238,6 +238,7 @@
     <Compile Include="MonteCarlo\Detectors\DAWVoxelDetectorsTests.cs" />
     <Compile Include="MonteCarlo\Detectors\DAWSphereDetectorsTests.cs" />
     <Compile Include="MonteCarlo\Detectors\pMCCAWLayersDetectorsTests.cs" />
+    <Compile Include="MonteCarlo\Detectors\FluenceTetrahedralMeshDetectorTests.cs" />
     <Compile Include="MonteCarlo\Detectors\pMCCAWOneLayerDetectorsTests.cs" />
     <Compile Include="MonteCarlo\Detectors\pMCDAWLayersDetectorsTests.cs" />
     <Compile Include="MonteCarlo\Detectors\pMCDAWOneLayerDetectorsTests.cs" />

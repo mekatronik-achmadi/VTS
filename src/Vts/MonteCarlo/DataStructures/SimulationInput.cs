@@ -15,6 +15,8 @@ namespace Vts.MonteCarlo
     /// file name, number of photons to execute (N), source, tissue and detector
     /// definitions.
     ///</summary>
+    [KnownType(typeof(MultiTetrahedronInCubeTissueInput))]
+    [KnownType(typeof(FluenceOfTetrahedralMeshDetectorInput))]
     public class SimulationInput
     {
         /// <summary>

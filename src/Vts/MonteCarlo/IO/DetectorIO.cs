@@ -111,6 +111,7 @@ namespace Vts.MonteCarlo.IO
                 }
 
                 return detector;
+
             }
             catch (Exception e)
             {
@@ -169,6 +170,7 @@ namespace Vts.MonteCarlo.IO
                 }
 
                 return detector;
+
             }
             catch (Exception e)
             {
