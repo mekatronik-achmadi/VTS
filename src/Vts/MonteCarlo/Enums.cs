@@ -348,7 +348,7 @@ namespace Vts.MonteCarlo
     /// </summary>
     public static class TissueType
     {
-        public static readonly string[] BuiltInTypes = new []
+        public static readonly string[] BuiltInTypes = new[]
         {
             /// <summary>
             /// SemiInfinite tissue type.  Includes homogeneous tissues.
@@ -365,14 +365,18 @@ namespace Vts.MonteCarlo
             /// <summary>
             /// Tissue slab with multiple embedded ellipsoids
             /// </summary>
-            "MultiEllipsoid",            
+            "MultiEllipsoid",    
             /// <summary>
             /// Tissue slab with embedded voxel
             /// </summary>
-            "SingleVoxel",
+            "SingleVoxel",        
+            /// <summary>
+            /// Tissue cude with multiple tetrahedra
+            /// </summary>
+            "MultiTetrahedronInCube",
         };
     }
-
+    
     public static class TissueRegionType
     {
         public static readonly string[] BuiltInTypes = new []
@@ -380,7 +384,8 @@ namespace Vts.MonteCarlo
             "Voxel",
             "Layer",
             "Ellipsoid",
-            "Cylinder"
+            "Cylinder",
+            "Tetrahedron"
         };
     }
 
@@ -468,6 +473,10 @@ namespace Vts.MonteCarlo
             /// Fluence as a function of x, y, z and omega
             /// </summary>
             "FluenceOfXAndYAndZAndOmega",
+             /// <summary>
+            /// Fluence as a function of a tetrahedral mesh
+            /// </summary>   
+            "FluenceOfTetrahedralMesh",          
             /// <summary>
             /// Absorbed energy as a function of source-detector separation (rho) and tissue depth (Z)
             /// </summary>
@@ -631,8 +640,12 @@ namespace Vts.MonteCarlo
         public static string FluenceOfRhoAndZAndTime { get { return "FluenceOfRhoAndZAndTime"; } }
         /// <summary>
         /// Fluence as a function of x, y and z
-        /// </summary>
+        /// </summary>       
         public static string FluenceOfXAndYAndZ { get { return "FluenceOfXAndYAndZ"; } }
+        /// <summary>
+        /// Fluence as a function of tetrahedral mesh
+        /// </summary>
+        public static string FluenceOfTetrahedralMesh { get {return "FluenceOfTetrahedralMesh"; } }
         /// <summary>
         /// Absorbed energy as a function of source-detector separation (rho) and tissue depth (Z)
         /// </summary>

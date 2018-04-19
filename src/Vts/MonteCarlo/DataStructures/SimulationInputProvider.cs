@@ -32,9 +32,11 @@ namespace Vts.MonteCarlo
                 GaussianSourceOneLayerTissueROfRhoDetector(),
                 FlatSourceOneLayerTissueROfRhoDetector(),
                 PointSourceMultiLayerMomentumTransferDetectors(),
+                PointSourceThreeLayerReflectedTimeOfRhoAndSubregionHistDetector(),
                 PointSourceSingleVoxelTissueROfXAndYAndFluenceOfXAndYAndZDetector(),
                 PointSourceThreeLayerReflectedTimeOfRhoAndSubregionHistDetector(),
-                EmbeddedDirectionalCircularSourceEllipTissueFluenceOfXAndYAndZ()
+                EmbeddedDirectionalCircularSourceEllipTissueFluenceOfXAndYAndZ(),
+                PointSourceMultiTetrahedronInCubeFluenceDetector()
             };
         }
 
@@ -780,5 +782,40 @@ namespace Vts.MonteCarlo
             );
         }
         #endregion
+
+        #region point source multi-tetrahedron in cube
+        /// <summary>
+        /// Point source, cube tetrahedron tissue, with 
+        /// </summary>
+        public static SimulationInput PointSourceMultiTetrahedronInCubeFluenceDetector()
+        {
+            return new SimulationInput(
+                100,
+                "multi_tetrahedron_FluenceOfTetrahedralMesh",
+                new SimulationOptions(
+                    0, // random number generator seed, -1=random seed, 0=fixed seed
+                    RandomNumberGeneratorType.MersenneTwister,
+                    AbsorptionWeightingType.Continuous,
+                    PhaseFunctionType.HenyeyGreenstein,
+                    new List<DatabaseType>() { }, // databases to be written
+                    true, // track statistics
+                    0.0, // RR threshold -> no RR performed
+                    0),
+                new DirectionalPointSourceInput(
+                    new Position(0.0, 0.0, 0.0),
+                    new Direction(0.0, 0.0, 1.0),
+                    0), // 0=start in air, 1=start in tissue, start in tissue so no MT tally at tissue crossing in air
+                new MultiTetrahedronInCubeTissueInput(
+                    new ITissueRegion[] { new TetrahedronTissueRegion(), }, "cube"
+                ),
+                new List<IDetectorInput>()
+                {
+                    new FluenceOfTetrahedralMeshDetectorInput()
+                }
+            );
+        }
+        #endregion
     }
 }
+
+

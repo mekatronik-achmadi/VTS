@@ -17,7 +17,10 @@ namespace Vts.IO
         static KnownTypes()
         {
             var knownTypesArray = new Type[] {	
-	                // nothing here anymore...not using XML DataContractSerializer
+                    typeof (FluenceOfTetrahedralMeshDetector),
+                    typeof (MultiTetrahedronInCubeTissueInput),
+                    typeof (TetrahedronTissueRegion),
+                    typeof (TriangleRegion),
                 };
 
             _types = knownTypesArray.ToDictionary(type => type.ToString());
