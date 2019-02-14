@@ -88,8 +88,8 @@ namespace Vts.MonteCarlo.Tissues
                 else  // on boundary
                 {
                     _onBoundary = true;
-                    //return false; // ckh try 8/21/11
-                    return true;
+                    return false; // ckh commented out 8/21/11 uncommented 2/13/19
+                    //return true; // ckh commented out 2/13/19
                 }
         }
         /// <summary>
@@ -102,7 +102,21 @@ namespace Vts.MonteCarlo.Tissues
             return !ContainsPosition(position) && _onBoundary;
         }
         /// <summary>
+        /// method to determine normal to surface at given position. Note this returns outward facing normal.
+        /// </summary>
+        /// <param name="position"></param>
+        /// <returns>Direction</returns>
+        public Direction SurfaceNormal(Position position)
+        {
+            return new Direction(
+                2 * (position.X - Center.X) / (Dx * Dx),
+                2 * (position.Y - Center.Y) / (Dy * Dy),
+                2 * (position.Z - Center.Z) / (Dz * Dz));
+            //throw new NotImplementedException();
+        }
+        /// <summary>
         /// method to determine if photon track or ray intersects boundary of ellipsoid
+        /// Note: if p1 out and p2 on boundary => both out
         /// </summary>
         /// <param name="photon">Photon</param>
         /// <param name="distanceToBoundary">return: distance to boundary</param>

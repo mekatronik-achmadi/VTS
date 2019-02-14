@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Vts.Common;
@@ -5,7 +6,7 @@ using Vts.Extensions;
 using Vts.MonteCarlo.PhotonData;
 
 namespace Vts.MonteCarlo.Tissues
-{   
+{
     /// <summary>
     /// Implements ITissue.  Defines a tissue geometry comprised of an
     /// inclusion embedded within a layered slab.
@@ -32,7 +33,7 @@ namespace Vts.MonteCarlo.Tissues
             _inclusionRegion = inclusionRegion;
             _inclusionRegionIndex = layerRegions.Count; // index is, by convention, after the layer region indices
             _layerRegionIndexOfInclusion = Enumerable.Range(0, layerRegions.Count)
-                .FirstOrDefault(i => ((LayerTissueRegion)layerRegions[i]).ContainsPosition(_inclusionRegion.Center));
+                .FirstOrDefault(i => ((LayerTissueRegion) layerRegions[i]).ContainsPosition(_inclusionRegion.Center));
         }
 
         /// <summary>
@@ -41,7 +42,10 @@ namespace Vts.MonteCarlo.Tissues
         public SingleInclusionTissue()
             : this(
                 new EllipsoidTissueRegion(),
-                new MultiLayerTissueInput().Regions) { }
+                new MultiLayerTissueInput().Regions)
+        {
+        }
+
         /// <summary>
         /// method to get tissue region index of photon's current position
         /// </summary>
@@ -72,7 +76,8 @@ namespace Vts.MonteCarlo.Tissues
             //}
 
             // if we're in the layer region of the inclusion, could be on boundary of layer
-            if ((regionIndex == _layerRegionIndexOfInclusion) && !Regions[_layerRegionIndexOfInclusion].OnBoundary(photon.DP.Position) )
+            if ((regionIndex == _layerRegionIndexOfInclusion) &&
+                !Regions[_layerRegionIndexOfInclusion].OnBoundary(photon.DP.Position))
             {
                 return _inclusionRegionIndex;
             }
@@ -100,6 +105,7 @@ namespace Vts.MonteCarlo.Tissues
             // otherwise we can do this with the base class method
             return base.GetNeighborRegionIndex(photon);
         }
+
         /// <summary>
         /// method to get distance from current photon position and direction to boundary of region
         /// </summary>
@@ -119,9 +125,9 @@ namespace Vts.MonteCarlo.Tissues
                     return distanceToBoundary;
                 }
                 else // otherwise, check that a projected track will hit the inclusion boundary
-                {          
+                {
                     var projectedPhoton = new Photon();
-                    projectedPhoton.DP = new PhotonDataPoint(photon.DP.Position, photon.DP.Direction, photon.DP.Weight, 
+                    projectedPhoton.DP = new PhotonDataPoint(photon.DP.Position, photon.DP.Direction, photon.DP.Weight,
                         photon.DP.TotalTime, photon.DP.StateFlag);
                     projectedPhoton.S = 100;
                     if (_inclusionRegion.RayIntersectBoundary(projectedPhoton, out distanceToBoundary))
@@ -134,8 +140,10 @@ namespace Vts.MonteCarlo.Tissues
             // if not hitting the inclusion, call the base (layer) method
             return base.GetDistanceToBoundary(photon);
         }
+
         /// <summary>
         /// method that provides reflected direction when phton reflects off boundary
+        /// reference: https://graphics.stanford.edu/courses/cs148-10-summer/docs/2006--degreve--reflection_refraction.pdf
         /// </summary>
         /// <param name="currentPosition">Position</param>
         /// <param name="currentDirection">Direction</param>
@@ -151,12 +159,28 @@ namespace Vts.MonteCarlo.Tissues
             }
             else
             {
-                return currentDirection;
+                if (_inclusionRegion.OnBoundary(currentPosition))
+                {
+                    Direction normal = _inclusionRegion.SurfaceNormal(currentPosition);
+                    var photon = new Photon();
+                    photon.DP.Position = currentPosition;
+                    photon.DP.Direction = currentDirection;
+                    var cosTheta = GetAngleRelativeToBoundaryNormal(photon);
+                    return new Direction(
+                        currentDirection.Ux + 2 * cosTheta * normal.Ux,
+                        currentDirection.Uy + 2 * cosTheta * normal.Uy,
+                        currentDirection.Uz + 2 * cosTheta * normal.Uz);
+                }
+                else
+                {
+                    return currentDirection;
+                }
             }
-            //throw new NotImplementedException(); // hopefully, this won't happen when the tissue inclusion is index-matched
         }
+
         /// <summary>
-        /// method that provides refracted direction when phton refracts off boundary
+        /// method that provides refracted direction when photon refracts off boundary
+        /// reference: https://graphics.stanford.edu/courses/cs148-10-summer/docs/2006--degreve--reflection_refraction.pdf
         /// </summary>
         /// <param name="currentPosition">Position</param>
         /// <param name="currentDirection">Direction</param>
@@ -175,9 +199,44 @@ namespace Vts.MonteCarlo.Tissues
             }
             else
             {
-                return currentDirection;
+                if (_inclusionRegion.OnBoundary(currentPosition)) // on boundary of inclusion
+                {
+                    var n = nCurrent / nNext;
+                    Direction normal = _inclusionRegion.SurfaceNormal(currentPosition);
+                    var photon = new Photon();
+                    photon.DP.Position = currentPosition;
+                    photon.DP.Direction = currentDirection;
+                    var cosTheta = GetAngleRelativeToBoundaryNormal(photon);
+                    var sinThetaSquared = n * n * (1 - cosTheta * cosTheta);
+                    return new Direction(
+                        n * currentDirection.Ux - (n + Math.Sqrt(1 - sinThetaSquared)) * normal.Ux,
+                        n * currentDirection.Uy - (n + Math.Sqrt(1 - sinThetaSquared)) * normal.Uy,
+                        n * currentDirection.Uz - (n + Math.Sqrt(1 - sinThetaSquared)) * normal.Uz);
+                }
+                else
+                {
+                    return currentDirection;
+                }
             }
-            //throw new NotImplementedException(); // hopefully, this won't happen when the tissue inclusion is index-matched
+        }
+
+        /// <summary>
+        /// method to get cosine of the angle between photons current direction and boundary normal
+        /// </summary>
+        /// <param name="photon"></param>
+        /// <returns>normal dot photon.Direction</returns>
+        public double GetAngleRelativeToBoundaryNormal(Photon photon)
+        {
+            // needs to call MultiLayerTissue when crossing top and bottom layer
+            if (base.OnDomainBoundary(photon.DP.Position))
+            {
+                return base.GetAngleRelativeToBoundaryNormal(photon);
+            }
+            else // on inclusion
+            {
+                Direction normal = _inclusionRegion.SurfaceNormal(photon.DP.Position);
+                return Direction.GetDotProduct(normal, photon.DP.Direction);
+            }
         }
     }
 }
